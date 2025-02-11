@@ -1,0 +1,12 @@
+{
+  "extends": "next",
+  "plugins": ["unused-imports", "react-hooks"],
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    "prefer-const": "error",
+    "no-console": "warn",
+    "no-undef": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
