@@ -2,7 +2,7 @@ import { useNode, useEditor } from "@craftjs/core";
 import debounce from "debounce";
 import { Resizable } from "re-resizable";
 import React, { useRef, useEffect, useState, useCallback } from "react";
-
+import { styled } from "styled-components";
 import {
   isPercentage,
   pxToPercent,
@@ -10,6 +10,75 @@ import {
   getElementDimensions,
 } from "../../lib/numToMeasurement";
 import { cn } from "@/lib/utils";
+
+const Indicators = styled.div<{ $bound?: "row" | "column" }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 100%;
+    display: block;
+    box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.25);
+    z-index: 99999;
+    pointer-events: none;
+    border: 2px solid #36a9e0;
+    &:nth-child(1) {
+      ${(props) =>
+        props.$bound
+          ? props.$bound === "row"
+            ? `
+                left: 50%;
+                top: -5px;
+                transform:translateX(-50%);
+              `
+            : `
+              top: 50%;
+              left: -5px;
+              transform:translateY(-50%);
+            `
+          : `
+              left: -5px;
+              top:-5px;
+            `}
+    }
+    &:nth-child(2) {
+      right: -5px;
+      top: -5px;
+      display: ${(props) => (props.$bound ? "none" : "block")};
+    }
+    &:nth-child(3) {
+      ${(props) =>
+        props.$bound
+          ? props.$bound === "row"
+            ? `
+                left: 50%;
+                bottom: -5px;
+                transform:translateX(-50%);
+              `
+            : `
+                bottom: 50%;
+                left: -5px;
+                transform:translateY(-50%);
+              `
+          : `
+              left: -5px;
+              bottom:-5px;
+            `}
+    }
+    &:nth-child(4) {
+      bottom: -5px;
+      right: -5px;
+      display: ${(props: any) => (props.$bound ? "none" : "block")};
+    }
+  }
+`;
 
 export const Resizer = ({ propKey, children, ...props }: any) => {
   const {
@@ -128,6 +197,103 @@ export const Resizer = ({ propKey, children, ...props }: any) => {
         acc[key] = active && inNodeContext;
         return acc;
       }, {})}
+      className={cn([
+        {
+          "m-auto": isRootNode,
+          flex: true,
+        },
+      ])}
+      ref={(ref) => {
+        if (ref) {
+          resizable.current = ref; // Ensure ref is set to resizable.current
+          if (resizable.current.resizable) {
+            connect(resizable.current.resizable);
+          } // Only call connect if ref is valid
+        }
+      }}
+      size={internalDimensions}
+      onResizeStart={(e) => {
+        updateInternalDimensionsInPx();
+        e.preventDefault();
+        e.stopPropagation();
+        const dom = resizable.current?.resizable;
+        if (!dom) return;
+        editingDimensions.current = {
+          width: dom.getBoundingClientRect().width,
+          height: dom.getBoundingClientRect().height,
+        };
+        isResizing.current = true;
+      }}
+      onResize={(_, __, ___, d) => {
+        const dom = resizable.current?.resizable;
+        if (!dom) return;
+
+        let { width, height }: any = getUpdatedDimensions(d.width, d.height);
+        const parentElement = dom.parentElement;
+
+        // Check if parentElement is null before accessing its properties
+        if (parentElement) {
+          if (isPercentage(nodeWidth)) {
+            width =
+              pxToPercent(width, getElementDimensions(parentElement).width) +
+              "%";
+          } else width = `${width}px`;
+
+          if (isPercentage(nodeHeight))
+            height =
+              pxToPercent(height, getElementDimensions(parentElement).height) +
+              "%";
+          else height = `${height}px`;
+
+          // Handle cases where width or height might be set to "auto"
+          if (isPercentage(width) && parentElement.style.width === "auto") {
+            width = editingDimensions.current.width + d.width + "px";
+          }
+
+          if (isPercentage(height) && parentElement.style.height === "auto") {
+            height = editingDimensions.current.height + d.height + "px";
+          }
+        }
+
+        // Update the prop with the new dimensions
+        setProp((prop: any) => {
+          prop[propKey.width] = width;
+          prop[propKey.height] = height;
+        }, 500);
+      }}
+      onResizeStop={() => {
+        isResizing.current = false;
+        updateInternalDimensionsWithOriginal();
+      }}
+      {...props}
+    >
+      {children}
+      {active && (
+        <Indicators $bound={fillSpace === "yes" ? parentDirection : false}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </Indicators>
+      )}
+    </Resizable>
+  );
+};
+
+/* <Resizable
+      enable={[
+        "top",
+        "left",
+        "bottom",
+        "right",
+        "topLeft",
+        "topRight",
+        "bottomLeft",
+        "bottomRight",
+      ].reduce((acc: any, key) => {
+        acc[key] = active && inNodeContext;
+        return acc;
+      }, {})}
       className={cn("relative overflow-visible", {
         "m-auto": isRootNode,
         flex: true,
@@ -228,6 +394,4 @@ export const Resizer = ({ propKey, children, ...props }: any) => {
           <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-white rounded-full box-shadow-lg z-50 pointer-events-none border-2 border-blue-500"></span>
         </div>
       )}
-    </Resizable>
-  );
-};
+    </Resizable> */
