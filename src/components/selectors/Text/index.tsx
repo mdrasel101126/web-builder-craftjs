@@ -12,6 +12,7 @@ export type TextProps = {
   shadow: number;
   text: string;
   margin: [string, string, string, string];
+  opacity: string;
 };
 
 export const Text = ({
@@ -22,6 +23,7 @@ export const Text = ({
   shadow,
   text = "Text",
   margin = ["0", "0", "0", "0"],
+  opacity = "100",
 }: Partial<TextProps>) => {
   const {
     connectors: { connect },
@@ -47,6 +49,7 @@ export const Text = ({
         textShadow: `0px 0px 2px rgba(0,0,0,${(shadow || 0) / 100})`,
         fontWeight: `${fontWeight}`,
         textAlign: `${textAlign}`,
+        opacity: `${opacity}%`,
       }}
     />
   );
@@ -59,6 +62,7 @@ Text.craft = {
     textAlign: "left",
     fontWeight: "Normal",
     color: "#000000",
+    opacity: "100",
     margin: [0, 0, 0, 0],
     shadow: 0,
     text: "Text",

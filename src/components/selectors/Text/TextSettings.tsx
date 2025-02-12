@@ -200,11 +200,13 @@ export function TypographyPanel() {
     textAlign,
     fontWeight,
     color,
+    opacity,
   } = useNode((node) => ({
     fontSize: node.data.props?.fontSize ?? "16",
     fontWeight: node.data.props?.fontWeight ?? "Normal",
     textAlign: node.data.props?.textAlign ?? "left",
     color: node.data.props?.color ?? "#000000",
+    opacity: node.data.props?.opacity ?? 100,
   }));
 
   return (
@@ -407,9 +409,9 @@ export function TypographyPanel() {
             <div className="flex items-center space-x-2 border rounded-md px-3 py-2">
               <input
                 type="number"
-                value={settings.opacity}
+                value={opacity}
                 onChange={(e) =>
-                  setSettings({ ...settings, opacity: Number(e.target.value) })
+                  setProp((props: any) => (props.opacity = e.target.value))
                 }
                 className="w-full bg-transparent border-none text-sm focus:outline-none"
                 min="0"
