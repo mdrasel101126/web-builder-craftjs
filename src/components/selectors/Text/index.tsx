@@ -5,30 +5,21 @@ import ContentEditable from "react-contenteditable";
 import { TextSettings } from "./TextSettings";
 
 export type TextProps = {
-  fontFamily: "Inter";
-  weight: "Medium";
-  size: "16";
-  alignment: "left";
-  isUnderline: false;
-  isBold: false;
-  isItalic: false;
-  isStrikethrough: false;
-  color: "#000000";
-  opacity: 100;
-  margin: [string, string, string, string];
+  fontSize: string;
+  textAlign: string;
+  fontWeight: string;
+  color: Record<"r" | "g" | "b" | "a", string>;
+  shadow: number;
   text: string;
+  margin: [string, string, string, string];
 };
 
 export const Text = ({
-  fontFamily = "Inter",
-  weight = "Medium",
-  size = "16",
-  alignment = "left",
-  isUnderline = false,
-  isBold = false,
-  isItalic = false,
-  isStrikethrough = false,
-  color = "#000000",
+  fontSize,
+  textAlign,
+  fontWeight,
+  color = { r: "92", g: "90", b: "90", a: "1" },
+  shadow,
   text = "Text",
   margin = ["0", "0", "0", "0"],
 }: Partial<TextProps>) => {
@@ -52,10 +43,10 @@ export const Text = ({
         width: "100%",
         margin: `${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px`,
         color: `rgba(${Object.values(color)})`,
-        fontSize: `${size}px`,
-        fontWeight: `${weight}`,
-        textAlign: `${alignment}`,
-        fontFamily: `${fontFamily}`,
+        fontSize: `${fontSize}px`,
+        textShadow: `0px 0px 2px rgba(0,0,0,${(shadow || 0) / 100})`,
+        fontWeight,
+        textAlign,
       }}
     />
   );
@@ -64,16 +55,12 @@ export const Text = ({
 Text.craft = {
   displayName: "Text",
   props: {
-    fontFamily: "Inter",
-    weight: "Medium",
-    size: "16",
-    alignment: "left",
-    isUnderline: false,
-    isBold: false,
-    isItalic: false,
-    isStrikethrough: false,
-    color: "#000000",
-    opacity: 100,
+    fontSize: "15",
+    textAlign: "left",
+    fontWeight: "500",
+    color: { r: 92, g: 90, b: 90, a: 1 },
+    margin: [0, 0, 0, 0],
+    shadow: 0,
     text: "Text",
   },
   related: {
