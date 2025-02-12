@@ -17,7 +17,7 @@ export type ToolbarItemProps = {
   prefix?: string;
   label?: string;
   full?: boolean;
-  propKey: string; // Ensure it's required
+  propKey: string;
   index?: number;
   children?: React.ReactNode;
   type: "text" | "color" | "bg" | "number" | "slider" | "radio" | "select";

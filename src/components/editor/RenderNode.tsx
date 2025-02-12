@@ -71,8 +71,6 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
     }
   }, [scroll]);
 
-  console.log("Props: ", getPos(dom!));
-
   return (
     <>
       {(isHover || isActive) && portalTarget
