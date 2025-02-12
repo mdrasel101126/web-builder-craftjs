@@ -47,10 +47,11 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
   }, [dom, isActive, isHover]);
 
   const getPos = useCallback((dom: HTMLElement) => {
-    if (!dom) return { top: "0px", left: "0px" };
-    const { top, left, bottom } = dom.getBoundingClientRect();
+    const { top, left, bottom } = dom
+      ? dom.getBoundingClientRect()
+      : { top: 0, left: 0, bottom: 0 };
     return {
-      top: `${top > 0 ? top : bottom}px`,
+      top: `${top > 0 ? top - 36 : bottom}px`,
       left: `${left}px`,
     };
   }, []);
@@ -69,6 +70,8 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
       return () => container?.removeEventListener("scroll", scroll);
     }
   }, [scroll]);
+
+  console.log("Props: ", getPos(dom!));
 
   return (
     <>
