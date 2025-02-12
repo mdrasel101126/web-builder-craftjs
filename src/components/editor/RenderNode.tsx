@@ -4,7 +4,7 @@ import { useNode, useEditor } from "@craftjs/core";
 import { ROOT_NODE } from "@craftjs/utils";
 import { useEffect, useRef, useCallback, useState } from "react";
 import ReactDOM from "react-dom";
-import { ArrowUp, Move, Trash } from "lucide-react"; // ShadCN Icons
+import { ArrowUp, Move, Trash } from "lucide-react";
 
 export const RenderNode = ({ render }: { render: React.ReactNode }) => {
   const { id } = useNode();
@@ -76,7 +76,7 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
         ? ReactDOM.createPortal(
             <div
               ref={currentRef}
-              className="fixed flex items-center bg-primary text-white px-2 py-2 rounded shadow-lg"
+              className="px-2 py-2 text-white bg-blue-500 fixed w-fit flex items-center"
               style={{
                 ...getPos(dom!),
                 zIndex: 9999,
