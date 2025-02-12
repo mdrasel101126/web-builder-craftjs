@@ -193,23 +193,13 @@ function App() {
                     custom={{ displayName: "Content" }}
                   >
                     <Text
-                      color={{
-                        r: "255",
-                        g: "255",
-                        b: "255",
-                        a: "1",
-                      }}
+                      color="#000000"
                       margin={["0", "0", "18", "0"]}
                       fontSize="20"
                       text="Design complex components"
                     ></Text>
                     <Text
-                      color={{
-                        r: "255",
-                        g: "255",
-                        b: "255",
-                        a: "0.8",
-                      }}
+                      color="#000000"
                       fontSize="14"
                       fontWeight="400"
                       text="You can define areas within your React component which users can drop other components into. <br/><br />You can even design how the component should be edited — content editable, drag to resize, have inputs on toolbars — anything really."
@@ -249,12 +239,7 @@ function App() {
                   custom={{ displayName: "Heading" }}
                 >
                   <Text
-                    color={{
-                      r: "46",
-                      g: "47",
-                      b: "47",
-                      a: "1",
-                    }}
+                    color="#000000"
                     fontSize="23"
                     text="Programmatic drag &amp; drop"
                   ></Text>

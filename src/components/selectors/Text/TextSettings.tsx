@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
+import { useNode } from "@craftjs/core";
+import { cn } from "@/lib/utils";
 
 export const TextSettings = () => {
   return (
@@ -190,8 +192,20 @@ export function TypographyPanel() {
     opacity: 100,
   });
 
-  const fontWeights = ["Light", "Regular", "Medium", "SemiBold", "Bold"];
+  const fontWeights = ["Lighter", "Normal", "Bolder", "Bold"];
   const fontSizes = ["12", "14", "16", "18", "20", "24", "32"];
+  const {
+    actions: { setProp },
+    fontSize,
+    textAlign,
+    fontWeight,
+    color,
+  } = useNode((node) => ({
+    fontSize: node.data.props?.fontSize ?? "16",
+    fontWeight: node.data.props?.fontWeight ?? "Normal",
+    textAlign: node.data.props?.textAlign ?? "left",
+    color: node.data.props?.color ?? "#000000",
+  }));
 
   return (
     <Card className="border-0 shadow-none bg-gray-100">
@@ -206,6 +220,7 @@ export function TypographyPanel() {
           }`}
         />
       </CardHeader>
+      <p style={{ fontWeight: "" }}></p>
       {isOpen && (
         <CardContent className="p-4 pt-0 space-y-4">
           <Select
@@ -226,19 +241,20 @@ export function TypographyPanel() {
 
           <div className="grid grid-cols-[2fr,1fr] gap-2">
             <Select
-              value={settings.weight}
+              value={fontWeight}
               onValueChange={(value) =>
-                setSettings({ ...settings, weight: value })
+                setProp((props: any) => (props.fontWeight = value))
               }
             >
               <SelectTrigger>
-                <SelectValue>{settings.weight}</SelectValue>
+                <SelectValue className="capitalize">{fontWeight}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {fontWeights.map((weight) => (
                   <SelectItem
                     key={weight}
                     value={weight}
+                    className="capitalize"
                   >
                     {weight}
                   </SelectItem>
@@ -246,13 +262,13 @@ export function TypographyPanel() {
               </SelectContent>
             </Select>
             <Select
-              value={settings.size}
+              value={fontSize}
               onValueChange={(value) =>
-                setSettings({ ...settings, size: value })
+                setProp((props: any) => (props.fontSize = value))
               }
             >
               <SelectTrigger>
-                <SelectValue>{settings.size}</SelectValue>
+                <SelectValue>{fontSize}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {fontSizes.map((size) => (
@@ -270,43 +286,59 @@ export function TypographyPanel() {
           <div className="flex space-x-1 border-b pb-4">
             <Toggle
               size="sm"
-              pressed={settings.alignment === "left"}
+              pressed={textAlign === "left"}
               onPressedChange={() =>
-                setSettings({ ...settings, alignment: "left" })
+                setProp((props: any) => (props.textAlign = "left"))
               }
               aria-label="Align left"
             >
-              <AlignLeft className="h-4 w-4" />
+              <AlignLeft
+                className={cn("h-4 w-4", {
+                  "text-violet-600": textAlign === "left",
+                })}
+              />
             </Toggle>
             <Toggle
               size="sm"
-              pressed={settings.alignment === "center"}
+              pressed={textAlign === "center"}
               onPressedChange={() =>
-                setSettings({ ...settings, alignment: "center" })
+                setProp((props: any) => (props.textAlign = "center"))
               }
               aria-label="Align center"
             >
-              <AlignCenter className="h-4 w-4" />
+              <AlignCenter
+                className={cn("h-4 w-4", {
+                  "text-violet-600": textAlign === "center",
+                })}
+              />
             </Toggle>
             <Toggle
               size="sm"
-              pressed={settings.alignment === "right"}
+              pressed={textAlign === "right"}
               onPressedChange={() =>
-                setSettings({ ...settings, alignment: "right" })
+                setProp((props: any) => (props.textAlign = "right"))
               }
               aria-label="Align right"
             >
-              <AlignRight className="h-4 w-4" />
+              <AlignRight
+                className={cn("h-4 w-4", {
+                  "text-violet-600": textAlign === "right",
+                })}
+              />
             </Toggle>
             <Toggle
               size="sm"
-              pressed={settings.alignment === "justify"}
+              pressed={textAlign === "justify"}
               onPressedChange={() =>
-                setSettings({ ...settings, alignment: "justify" })
+                setProp((props: any) => (props.textAlign = "justify"))
               }
               aria-label="Justify"
             >
-              <AlignJustify className="h-4 w-4" />
+              <AlignJustify
+                className={cn("h-4 w-4", {
+                  "text-violet-600": textAlign === "justify",
+                })}
+              />
             </Toggle>
           </div>
 
@@ -359,18 +391,18 @@ export function TypographyPanel() {
 
           <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center space-x-2 border rounded-md px-3 py-2">
-              <div
-                className="h-4 w-4 rounded bg-black"
-                style={{ backgroundColor: settings.color }}
-              />
               <input
-                type="text"
-                value={settings.color}
+                type="color"
+                value={color}
                 onChange={(e) =>
-                  setSettings({ ...settings, color: e.target.value })
+                  setProp((props: any) => (props.color = e.target.value))
                 }
-                className="w-full bg-transparent border-none text-sm focus:outline-none"
+                className="rounded bg-black"
+                style={{ backgroundColor: color }}
               />
+              <p className="w-full bg-transparent border-none text-sm focus:outline-none">
+                {color}
+              </p>
             </div>
             <div className="flex items-center space-x-2 border rounded-md px-3 py-2">
               <input
