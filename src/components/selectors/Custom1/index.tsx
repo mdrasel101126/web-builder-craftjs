@@ -1,15 +1,31 @@
-import { Element, useNode } from '@craftjs/core';
-import React from 'react';
+import { Element, useNode, UserComponent } from "@craftjs/core";
+import React, { FC } from "react";
 
-import { Button } from '../Button';
-import { Container } from '../Container';
+import { Button } from "../Button";
+import { Container } from "../Container";
 
-export const OnlyButtons = ({ children, ...props }) => {
+type OnlyButtonsProps = {
+  children?: React.ReactNode;
+};
+
+export const OnlyButtons: UserComponent<OnlyButtonsProps> = ({
+  children,
+  ...props
+}) => {
   const {
     connectors: { connect },
   } = useNode();
   return (
-    <div title="only-buttons" ref={connect} className="w-full mt-5" {...props}>
+    <div
+      title="only-buttons"
+      ref={(node) => {
+        if (node) {
+          connect(node);
+        }
+      }}
+      className="w-full mt-5"
+      {...props}
+    >
       {children}
     </div>
   );
@@ -17,22 +33,31 @@ export const OnlyButtons = ({ children, ...props }) => {
 
 OnlyButtons.craft = {
   rules: {
-    canMoveIn: (nodes) => nodes.every((node) => node.data.type === Button),
+    canMoveIn: (nodes) =>
+      nodes.every(
+        (node) =>
+          node.data.type === Button ||
+          node.data.type === Button.craft?.displayName,
+      ),
   },
 };
 
-export const Custom1 = (props: any) => {
+export const Custom1: UserComponent = (props) => {
   return (
     <Container {...props}>
       <h2 className="text-lg px-10 py-5 text-white">
         I'm a component that only accepts
         <br /> buttons.
       </h2>
-      <Element canvas id="wow" is={OnlyButtons}>
+      <Element
+        canvas
+        id="wow"
+        is={OnlyButtons}
+      >
         <Button />
         <Button
           buttonStyle="outline"
-          color={{ r: 255, g: 255, b: 255, a: 1 }}
+          color="text-blue-500"
         />
       </Element>
     </Container>
@@ -41,5 +66,5 @@ export const Custom1 = (props: any) => {
 
 Custom1.craft = {
   ...Container.craft,
-  displayName: 'Custom 1',
+  displayName: "Custom 1",
 };
