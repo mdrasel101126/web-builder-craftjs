@@ -3,27 +3,41 @@ import React from "react";
 import ContentEditable from "react-contenteditable";
 
 import { TextSettings } from "./TextSettings";
+import { cn } from "@/lib/utils";
+type FontKey = "Inter" | "Roboto" | "Arial" | "Poppins" | "Rajdhani";
+
+type FontMap = Record<FontKey, string>;
+
+const fonts: FontMap = {
+  Inter: "font-inter",
+  Roboto: "font-roboto",
+  Arial: "font-arial",
+  Poppins: "font-poppins",
+  Rajdhani: "font-rajdhani",
+};
 
 export type TextProps = {
+  fontFamily: FontKey;
   fontSize: string;
   textAlign: string;
   fontWeight: string;
   color: Record<"r" | "g" | "b" | "a", string> | string;
-  shadow: number;
-  text: string;
   margin: [string, string, string, string];
   opacity: string;
+  shadow: number;
+  text: string;
 };
 
 export const Text = ({
+  fontFamily = "Arial",
   fontSize,
   textAlign,
   fontWeight,
   color = "#000000",
-  shadow,
-  text = "Text",
   margin = ["0", "0", "0", "0"],
   opacity = "100",
+  shadow,
+  text = "Text",
 }: Partial<TextProps>) => {
   const {
     connectors: { connect },
@@ -41,6 +55,7 @@ export const Text = ({
         setProp((prop) => (prop.text = e.target.value), 500);
       }} // use true to disable editing
       tagName="h2" // Use a custom HTML tag (uses a div by default)
+      className={cn(fonts[fontFamily])}
       style={{
         width: "100%",
         margin: `${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px`,
@@ -58,6 +73,7 @@ export const Text = ({
 Text.craft = {
   displayName: "Text",
   props: {
+    fontFamily: "Arial",
     fontSize: "16",
     textAlign: "left",
     fontWeight: "Normal",
@@ -70,4 +86,8 @@ Text.craft = {
   related: {
     toolbar: TextSettings,
   },
+};
+
+const Test = () => {
+  return <p style={{ fontFamily: "sans-serif" }}>Hello world</p>;
 };

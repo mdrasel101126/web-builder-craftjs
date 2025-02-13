@@ -196,12 +196,14 @@ export function TypographyPanel() {
   const fontSizes = ["12", "14", "16", "18", "20", "24", "32"];
   const {
     actions: { setProp },
+    fontFamily,
     fontSize,
     textAlign,
     fontWeight,
     color,
     opacity,
   } = useNode((node) => ({
+    fontFamily: node.data.props?.fontFamily ?? "Arial",
     fontSize: node.data.props?.fontSize ?? "16",
     fontWeight: node.data.props?.fontWeight ?? "Normal",
     textAlign: node.data.props?.textAlign ?? "left",
@@ -226,18 +228,19 @@ export function TypographyPanel() {
       {isOpen && (
         <CardContent className="p-4 pt-0 space-y-4">
           <Select
-            value={settings.fontFamily}
+            value={fontFamily}
             onValueChange={(value) =>
-              setSettings({ ...settings, fontFamily: value })
+              setProp((props: any) => (props.fontFamily = value))
             }
           >
             <SelectTrigger>
-              <SelectValue>{settings.fontFamily}</SelectValue>
+              <SelectValue>{fontFamily}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Inter">Inter</SelectItem>
               <SelectItem value="Roboto">Roboto</SelectItem>
               <SelectItem value="Arial">Arial</SelectItem>
+              <SelectItem value="Poppins">Poppins</SelectItem>
             </SelectContent>
           </Select>
 
