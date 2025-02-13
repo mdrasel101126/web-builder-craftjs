@@ -26,6 +26,7 @@ export type TextProps = {
   opacity: string;
   isUnderline: boolean;
   isBold: boolean;
+  isItalic: boolean;
   shadow: number;
   text: string;
 };
@@ -40,6 +41,7 @@ export const Text = ({
   opacity = "100",
   isUnderline = false,
   isBold = false,
+  isItalic = false,
   shadow,
   text = "Text",
 }: Partial<TextProps>) => {
@@ -63,6 +65,7 @@ export const Text = ({
         fonts[fontFamily],
         { underline: isUnderline },
         { "font-bold": isBold },
+        { italic: isItalic },
       )}
       style={{
         width: "100%",
@@ -89,6 +92,7 @@ Text.craft = {
     opacity: "100",
     isUnderline: false,
     isBold: false,
+    isItalic: false,
     margin: [0, 0, 0, 0],
     shadow: 0,
     text: "Text",

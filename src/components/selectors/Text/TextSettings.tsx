@@ -204,6 +204,7 @@ export function TypographyPanel() {
     opacity,
     isUnderline,
     isBold,
+    isItalic,
   } = useNode((node) => ({
     fontFamily: node.data.props?.fontFamily ?? "Arial",
     fontSize: node.data.props?.fontSize ?? "16",
@@ -213,6 +214,7 @@ export function TypographyPanel() {
     opacity: node.data.props?.opacity ?? 100,
     isUnderline: node.data.props?.isUnderline ?? false,
     isBold: node.data.props?.isBold ?? false,
+    isItalic: node.data.props?.isItalic ?? false,
   }));
 
   return (
@@ -396,14 +398,20 @@ export function TypographyPanel() {
             </Toggle>
             <Toggle
               size="sm"
-              pressed={settings.isItalic}
+              pressed={isItalic}
               onPressedChange={(pressed) =>
-                setSettings({ ...settings, isItalic: pressed })
+                setProp((props: any) => (props.isItalic = pressed))
               }
               aria-label="Italic"
               className="italic"
             >
-              I
+              <span
+                className={cn("font-medium", {
+                  "text-violet-600": isItalic === true,
+                })}
+              >
+                I
+              </span>
             </Toggle>
             <Toggle
               size="sm"
