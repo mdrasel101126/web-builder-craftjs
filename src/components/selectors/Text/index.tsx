@@ -24,6 +24,8 @@ export type TextProps = {
   color: Record<"r" | "g" | "b" | "a", string> | string;
   margin: [string, string, string, string];
   opacity: string;
+  isUnderline: boolean;
+  isBold: boolean;
   shadow: number;
   text: string;
 };
@@ -36,6 +38,8 @@ export const Text = ({
   color = "#000000",
   margin = ["0", "0", "0", "0"],
   opacity = "100",
+  isUnderline = false,
+  isBold = false,
   shadow,
   text = "Text",
 }: Partial<TextProps>) => {
@@ -55,7 +59,11 @@ export const Text = ({
         setProp((prop) => (prop.text = e.target.value), 500);
       }} // use true to disable editing
       tagName="h2" // Use a custom HTML tag (uses a div by default)
-      className={cn(fonts[fontFamily])}
+      className={cn(
+        fonts[fontFamily],
+        { underline: isUnderline },
+        { "font-bold": isBold },
+      )}
       style={{
         width: "100%",
         margin: `${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px`,
@@ -79,6 +87,8 @@ Text.craft = {
     fontWeight: "Normal",
     color: "#000000",
     opacity: "100",
+    isUnderline: false,
+    isBold: false,
     margin: [0, 0, 0, 0],
     shadow: 0,
     text: "Text",

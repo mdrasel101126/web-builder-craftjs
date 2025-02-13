@@ -202,6 +202,8 @@ export function TypographyPanel() {
     fontWeight,
     color,
     opacity,
+    isUnderline,
+    isBold,
   } = useNode((node) => ({
     fontFamily: node.data.props?.fontFamily ?? "Arial",
     fontSize: node.data.props?.fontSize ?? "16",
@@ -209,6 +211,8 @@ export function TypographyPanel() {
     textAlign: node.data.props?.textAlign ?? "left",
     color: node.data.props?.color ?? "#000000",
     opacity: node.data.props?.opacity ?? 100,
+    isUnderline: node.data.props?.isUnderline ?? false,
+    isBold: node.data.props?.isBold ?? false,
   }));
 
   return (
@@ -247,9 +251,14 @@ export function TypographyPanel() {
           <div className="grid grid-cols-[2fr,1fr] gap-2">
             <Select
               value={fontWeight}
-              onValueChange={(value) =>
-                setProp((props: any) => (props.fontWeight = value))
-              }
+              onValueChange={(value) => {
+                setProp((props: any) => (props.fontWeight = value));
+                if (value === "Bold") {
+                  setProp((props: any) => (props.isBold = true));
+                } else {
+                  setProp((props: any) => (props.isBold = false));
+                }
+              }}
             >
               <SelectTrigger>
                 <SelectValue className="capitalize">{fontWeight}</SelectValue>
@@ -350,25 +359,40 @@ export function TypographyPanel() {
           <div className="flex space-x-1">
             <Toggle
               size="sm"
-              pressed={settings.isUnderline}
+              pressed={isUnderline}
               onPressedChange={(pressed) =>
-                setSettings({ ...settings, isUnderline: pressed })
+                setProp((props: any) => (props.isUnderline = pressed))
               }
               aria-label="Underline"
-              className="font-medium"
             >
-              U
+              <span
+                className={cn("font-medium", {
+                  "text-violet-600": isUnderline === true,
+                })}
+              >
+                U
+              </span>
             </Toggle>
             <Toggle
               size="sm"
-              pressed={settings.isBold}
-              onPressedChange={(pressed) =>
-                setSettings({ ...settings, isBold: pressed })
-              }
+              pressed={isBold}
+              onPressedChange={(pressed) => {
+                setProp((props: any) => (props.isBold = pressed));
+                if (pressed) {
+                  setProp((props: any) => (props.fontWeight = "Bold"));
+                } else {
+                  setProp((props: any) => (props.fontWeight = "Normal"));
+                }
+              }}
               aria-label="Bold"
-              className="font-bold"
             >
-              B
+              <span
+                className={cn("font-medium", {
+                  "text-violet-600 font-bold": isBold === true,
+                })}
+              >
+                B
+              </span>
             </Toggle>
             <Toggle
               size="sm"
