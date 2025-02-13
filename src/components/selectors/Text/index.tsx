@@ -27,6 +27,7 @@ export type TextProps = {
   isUnderline: boolean;
   isBold: boolean;
   isItalic: boolean;
+  padding: [string, string, string, string];
   shadow: number;
   text: string;
 };
@@ -42,6 +43,7 @@ export const Text = ({
   isUnderline = false,
   isBold = false,
   isItalic = false,
+  padding = ["0", "0", "0", "0"],
   shadow,
   text = "Text",
 }: Partial<TextProps>) => {
@@ -76,6 +78,7 @@ export const Text = ({
         fontWeight: `${fontWeight}`,
         textAlign: `${textAlign}`,
         opacity: `${opacity}%`,
+        padding: `${padding[0]}px ${padding[1]}px ${padding[2]}px ${padding[3]}px`,
       }}
     />
   );
@@ -93,7 +96,8 @@ Text.craft = {
     isUnderline: false,
     isBold: false,
     isItalic: false,
-    margin: [0, 0, 0, 0],
+    padding: ["0", "0", "0", "0"],
+    margin: ["0", "0", "0", "0"],
     shadow: 0,
     text: "Text",
   },
@@ -103,5 +107,12 @@ Text.craft = {
 };
 
 const Test = () => {
-  return <p style={{ fontFamily: "sans-serif" }}>Hello world</p>;
+  return (
+    <p
+      style={{ fontFamily: "sans-serif", maxWidth: "10" }}
+      className="h-auto w-fit"
+    >
+      Hello world
+    </p>
+  );
 };

@@ -10,6 +10,9 @@ import {
   AlignCenter,
   AlignRight,
   AlignJustify,
+  Minus,
+  Plus,
+  ChevronUp,
 } from "lucide-react";
 import {
   Select,
@@ -22,10 +25,21 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
 import { useNode } from "@craftjs/core";
 import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export const TextSettings = () => {
   return (
     <React.Fragment>
+      {/* Spacing Setting Section */}
+      <SpacingPanel />
+      {/* Size setting Section */}
+      <SizePanel />
       {/* Typography Settings Section */}
       <TypographyPanel />
 
@@ -218,7 +232,7 @@ export function TypographyPanel() {
   }));
 
   return (
-    <Card className="border-0 shadow-none bg-gray-100">
+    <Card className="border-0 rounded-none shadow-none bg-gray-100">
       <CardHeader
         className="py-3 px-4 flex flex-row items-center justify-between cursor-pointer bg-gray-100"
         onClick={() => setIsOpen(!isOpen)}
@@ -230,7 +244,6 @@ export function TypographyPanel() {
           }`}
         />
       </CardHeader>
-      <p style={{ fontWeight: "" }}></p>
       {isOpen && (
         <CardContent className="p-4 pt-0 space-y-4">
           <Select
@@ -458,5 +471,301 @@ export function TypographyPanel() {
         </CardContent>
       )}
     </Card>
+  );
+}
+
+export function SpacingPanel() {
+  const [isOpen, setIsOpen] = useState(true);
+  const [isPaddingOpen, setIsPaddingOpen] = React.useState(true);
+  const [isMarginOpen, setIsMarginOpen] = React.useState(false);
+
+  const {
+    actions: { setProp },
+    padding,
+    margin,
+  } = useNode((node) => ({
+    padding: node.data.props?.padding ?? ["0", "0", "0", "0"],
+    margin: node.data.props?.margin ?? ["0", "0", "0", "0"],
+  }));
+  return (
+    <div className="border-0 rounded-none shadow-none bg-gray-100">
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <CollapsibleTrigger asChild>
+          <Button
+            variant="ghost"
+            className="w-full flex items-center justify-between p-4 hover:bg-accent hover:no-underline"
+          >
+            <span className="font-medium">Spacing</span>
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4 opacity-50" />
+            ) : (
+              <ChevronDown className="h-4 w-4 opacity-50" />
+            )}
+          </Button>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <div className="p-4 space-y-2">
+            {/* Padding Section */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Padding</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsPaddingOpen(!isPaddingOpen)}
+                >
+                  {isPaddingOpen ? (
+                    <Minus className="h-4 w-4" />
+                  ) : (
+                    <Plus className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+
+              {isPaddingOpen && (
+                <div className="flex gap-4">
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={padding[0]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.padding[0] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={padding[1]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.padding[1] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={padding[2]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.padding[2] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={padding[3]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.padding[3] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Margin Section */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Margin</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsMarginOpen(!isMarginOpen)}
+                >
+                  {isMarginOpen ? (
+                    <Minus className="h-4 w-4" />
+                  ) : (
+                    <Plus className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+
+              {isMarginOpen && (
+                <div className="flex gap-4">
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={margin[0]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.margin[0] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={margin[1]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.margin[1] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={margin[2]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.margin[2] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-1.5">
+                    <Input
+                      type="number"
+                      className="h-8 px-1"
+                      value={margin[3]}
+                      onChange={(e) =>
+                        setProp(
+                          (props: any) => (props.margin[3] = e.target.value),
+                        )
+                      }
+                      min={0}
+                    />
+                    <div className="flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">PX</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
+
+interface SizeValue {
+  value: string | number;
+  unit: "PX" | "%" | "VW" | "VH" | "AUTO" | "NONE";
+}
+export function SizePanel() {
+  const [isOpen, setIsOpen] = useState(true);
+  const [width, setWidth] = React.useState<SizeValue>({
+    value: 500,
+    unit: "PX",
+  });
+  const {
+    actions: { setProp },
+    fontFamily,
+  } = useNode((node) => ({
+    fontFamily: node.data.props?.fontFamily ?? "Arial",
+  }));
+
+  return (
+    <div className="border-0 rounded-none shadow-none bg-gray-100">
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <CollapsibleTrigger asChild>
+          <Button
+            variant="ghost"
+            className="w-full flex items-center justify-between p-4 hover:bg-accent hover:no-underline"
+          >
+            <span className="font-medium">Size</span>
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4 opacity-50" />
+            ) : (
+              <ChevronDown className="h-4 w-4 opacity-50" />
+            )}
+          </Button>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <div className="p-4 space-y-2">
+            <div>
+              {/* Width */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Width
+                </label>
+                <div>
+                  <Input
+                    type="number"
+                    className="h-8 px-1"
+                    value={width.value}
+                    onChange={(e) =>
+                      setWidth({
+                        value: e.target.value,
+                        unit: width.unit,
+                      })
+                    }
+                    min={0}
+                  />{" "}
+                  <Select>
+                    <SelectTrigger className="h-8 w-[80px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="AUTO">Auto</SelectItem>
+                      <SelectItem value="NONE">None</SelectItem>
+                      <SelectItem value="PX">PX</SelectItem>
+                      <SelectItem value="%">%</SelectItem>
+                      <SelectItem value="VW">VW</SelectItem>
+                      <SelectItem value="VH">VH</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 }
