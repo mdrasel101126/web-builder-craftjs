@@ -193,13 +193,13 @@ function App() {
                     custom={{ displayName: "Content" }}
                   >
                     <Text
-                      color="#000000"
+                      color="#ffff"
                       margin={["0", "0", "18", "0"]}
                       fontSize="20"
                       text="Design complex components"
                     ></Text>
                     <Text
-                      color="#000000"
+                      color="#ffff"
                       fontSize="14"
                       fontWeight="400"
                       text="You can define areas within your React component which users can drop other components into. <br/><br />You can even design how the component should be edited — content editable, drag to resize, have inputs on toolbars — anything really."
