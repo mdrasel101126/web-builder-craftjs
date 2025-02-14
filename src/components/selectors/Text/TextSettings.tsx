@@ -691,7 +691,7 @@ export function SpacingPanel() {
 
 interface SizeValue {
   value: string | number;
-  unit: "PX" | "%" | "VW" | "VH";
+  unit: "PX" | "%" | "VW" | "VH" | "FIT" | "FULL" | "AUTO" | "NONE";
 }
 export function SizePanel() {
   const [isOpen, setIsOpen] = useState(true);
@@ -779,6 +779,10 @@ export function SizePanel() {
                       <SelectItem value="%">%</SelectItem>
                       <SelectItem value="VW">VW</SelectItem>
                       <SelectItem value="VH">VH</SelectItem>
+                      {/*<SelectItem value="AUTO">AUTO</SelectItem>
+                      <SelectItem value="FULL">FULL</SelectItem>
+                      <SelectItem value="FIT">FIT</SelectItem>
+                      <SelectItem value="NONE">None</SelectItem> */}
                     </SelectContent>
                   </Select>
                 </div>
