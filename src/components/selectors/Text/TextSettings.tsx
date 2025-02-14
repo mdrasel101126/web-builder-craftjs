@@ -691,26 +691,22 @@ export function SpacingPanel() {
 
 interface SizeValue {
   value: string | number;
-  unit: "PX" | "%" | "VW" | "VH" | "AUTO" | "FULL" | "FIT" | "NONE";
+  unit: "PX" | "%" | "VW" | "VH";
 }
 export function SizePanel() {
   const [isOpen, setIsOpen] = useState(true);
-  const [width, setWidth] = React.useState<SizeValue>({
+  /*  const [width, setWidth] = React.useState<SizeValue>({
     value: 500,
     unit: "PX",
-  });
+  }); */
   const {
     actions: { setProp },
-    id,
-    fontFamily,
+    width,
+    height,
   } = useNode((node) => ({
-    fontFamily: node.data.props?.fontFamily ?? "Arial",
+    width: node.data.props?.width ?? { value: "100", unit: "%" },
+    height: node.data.props?.height ?? { value: "100", unit: "%" },
   }));
-
-  console.log("Width: ", width);
-
-  const container = document?.getElementById(id);
-  console.log("Id", container);
 
   return (
     <div className="border-0 rounded-none shadow-none bg-gray-100">
@@ -748,7 +744,9 @@ export function SizePanel() {
                     onChange={(e) => {
                       const newValue = e.target.value;
                       if (/^\d*$/.test(newValue)) {
-                        setWidth({ value: newValue, unit: width.unit });
+                        setProp((props: any) => {
+                          props.width = { value: newValue, unit: width.unit };
+                        });
                       }
                     }}
                     min={0}
@@ -759,9 +757,13 @@ export function SizePanel() {
                       if (
                         ["FIT", "AUTO", "FULL", "NONE"].includes(width.unit)
                       ) {
-                        setWidth({ value: unit, unit });
+                        setProp((props: any) => {
+                          props.width = { value: unit, unit };
+                        });
                       } else {
-                        setWidth({ ...width, unit });
+                        setProp((props: any) => {
+                          props.width = { ...width, unit };
+                        });
                       }
                     }}
                   >
@@ -777,10 +779,62 @@ export function SizePanel() {
                       <SelectItem value="%">%</SelectItem>
                       <SelectItem value="VW">VW</SelectItem>
                       <SelectItem value="VH">VH</SelectItem>
-                      <SelectItem value="AUTO">AUTO</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              {/* Height */}
+              <div className="flex items-center gap-1">
+                <label className="block text-sm font-medium text-gray-700">
+                  Height:
+                </label>
+                <div className="flex items-center gap-0">
+                  <Input
+                    type="text"
+                    className="h-8 px-1"
+                    value={height.value}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      if (/^\d*$/.test(newValue)) {
+                        setProp((props: any) => {
+                          props.height = { value: newValue, unit: height.unit };
+                        });
+                      }
+                    }}
+                    min={0}
+                  />{" "}
+                  <Select
+                    value={height.unit}
+                    onValueChange={(unit: SizeValue["unit"]) => {
+                      if (
+                        ["FIT", "AUTO", "FULL", "NONE"].includes(height.unit)
+                      ) {
+                        setProp((props: any) => {
+                          props.height = { value: unit, unit };
+                        });
+                      } else {
+                        setProp((props: any) => {
+                          props.height = { ...height, unit };
+                        });
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="h-8 w-[80px] p-1">
+                      <SelectValue>
+                        {["FIT", "AUTO", "FULL", "NONE"].includes(height.unit)
+                          ? "-"
+                          : height.unit}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="PX">PX</SelectItem>
+                      <SelectItem value="%">%</SelectItem>
+                      <SelectItem value="VW">VW</SelectItem>
+                      <SelectItem value="VH">VH</SelectItem>
+                      {/*                       <SelectItem value="AUTO">AUTO</SelectItem>
                       <SelectItem value="FULL">FULL</SelectItem>
                       <SelectItem value="FIT">FIT</SelectItem>
-                      <SelectItem value="NONE">None</SelectItem>
+                      <SelectItem value="NONE">None</SelectItem> */}
                     </SelectContent>
                   </Select>
                 </div>

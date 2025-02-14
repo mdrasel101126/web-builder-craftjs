@@ -28,6 +28,14 @@ export type TextProps = {
   isBold: boolean;
   isItalic: boolean;
   padding: [string, string, string, string];
+  width: {
+    value: string;
+    unit: string;
+  };
+  height: {
+    value: string;
+    unit: string;
+  };
   shadow: number;
   text: string;
 };
@@ -44,6 +52,8 @@ export const Text = ({
   isBold = false,
   isItalic = false,
   padding = ["0", "0", "0", "0"],
+  width = { value: "100", unit: "%" },
+  height = { value: "100", unit: "%" },
   shadow,
   text = "Text",
 }: Partial<TextProps>) => {
@@ -70,7 +80,6 @@ export const Text = ({
         { italic: isItalic },
       )}
       style={{
-        width: "100%",
         margin: `${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px`,
         color: `${color}`,
         fontSize: `${fontSize}px`,
@@ -79,6 +88,8 @@ export const Text = ({
         textAlign: `${textAlign}`,
         opacity: `${opacity}%`,
         padding: `${padding[0]}px ${padding[1]}px ${padding[2]}px ${padding[3]}px`,
+        width: `${width.value}${width.unit}`,
+        height: `${height.value}${height.unit}`,
       }}
     />
   );
@@ -98,6 +109,8 @@ Text.craft = {
     isItalic: false,
     padding: ["0", "0", "0", "0"],
     margin: ["0", "0", "0", "0"],
+    width: { value: "100", unit: "%" },
+    height: { value: "100", unit: "%" },
     shadow: 0,
     text: "Text",
   },
