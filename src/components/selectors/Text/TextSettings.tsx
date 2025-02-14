@@ -691,7 +691,7 @@ export function SpacingPanel() {
 
 interface SizeValue {
   value: string | number;
-  unit: "PX" | "%" | "VW" | "VH" | "AUTO" | "NONE";
+  unit: "PX" | "%" | "VW" | "VH" | "AUTO" | "FULL" | "FIT" | "NONE";
 }
 export function SizePanel() {
   const [isOpen, setIsOpen] = useState(true);
@@ -701,10 +701,16 @@ export function SizePanel() {
   });
   const {
     actions: { setProp },
+    id,
     fontFamily,
   } = useNode((node) => ({
     fontFamily: node.data.props?.fontFamily ?? "Arial",
   }));
+
+  console.log("Width: ", width);
+
+  const container = document?.getElementById(id);
+  console.log("Id", container);
 
   return (
     <div className="border-0 rounded-none shadow-none bg-gray-100">
@@ -728,36 +734,53 @@ export function SizePanel() {
 
         <CollapsibleContent>
           <div className="p-4 space-y-2">
-            <div>
+            <div className="grid grid-cols-2 gap-3">
               {/* Width */}
-              <div>
+              <div className="flex items-center gap-1">
                 <label className="block text-sm font-medium text-gray-700">
-                  Width
+                  Width:
                 </label>
-                <div>
+                <div className="flex items-center gap-0">
                   <Input
-                    type="number"
+                    type="text"
                     className="h-8 px-1"
                     value={width.value}
-                    onChange={(e) =>
-                      setWidth({
-                        value: e.target.value,
-                        unit: width.unit,
-                      })
-                    }
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      if (/^\d*$/.test(newValue)) {
+                        setWidth({ value: newValue, unit: width.unit });
+                      }
+                    }}
                     min={0}
                   />{" "}
-                  <Select>
-                    <SelectTrigger className="h-8 w-[80px]">
-                      <SelectValue />
+                  <Select
+                    value={width.unit}
+                    onValueChange={(unit: SizeValue["unit"]) => {
+                      if (
+                        ["FIT", "AUTO", "FULL", "NONE"].includes(width.unit)
+                      ) {
+                        setWidth({ value: unit, unit });
+                      } else {
+                        setWidth({ ...width, unit });
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="h-8 w-[80px] p-1">
+                      <SelectValue>
+                        {["FIT", "AUTO", "FULL", "NONE"].includes(width.unit)
+                          ? "-"
+                          : width.unit}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="AUTO">Auto</SelectItem>
-                      <SelectItem value="NONE">None</SelectItem>
                       <SelectItem value="PX">PX</SelectItem>
                       <SelectItem value="%">%</SelectItem>
                       <SelectItem value="VW">VW</SelectItem>
                       <SelectItem value="VH">VH</SelectItem>
+                      <SelectItem value="AUTO">AUTO</SelectItem>
+                      <SelectItem value="FULL">FULL</SelectItem>
+                      <SelectItem value="FIT">FIT</SelectItem>
+                      <SelectItem value="NONE">None</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
