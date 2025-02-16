@@ -2,10 +2,13 @@ import React from "react";
 
 import { ToolbarSection, ToolbarItem } from "../../editor";
 import { ToolbarRadio } from "@/components/editor/Toolbar/ToolbarRadio";
+import { LayoutPanel } from "../Text/TextSettings";
 
 export const ContainerSettings = () => {
   return (
     <React.Fragment>
+      {/* Layout Setting Section */}
+      <LayoutPanel />
       <ToolbarSection
         title="Dimensions"
         props={["width", "height"]}

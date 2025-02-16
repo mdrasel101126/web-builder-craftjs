@@ -197,7 +197,7 @@ export const Resizer = ({ propKey, children, ...props }: any) => {
         acc[key] = active && inNodeContext;
         return acc;
       }, {})}
-      className={cn([
+      className={cn("min-h-10", [
         {
           "m-auto": isRootNode,
           flex: true,
