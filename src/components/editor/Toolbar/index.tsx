@@ -17,7 +17,7 @@ export const Toolbar = () => {
   });
 
   return (
-    <div className="py-1 h-full">
+    <div className="py-1 h-screen overflow-y-auto">
       {active && related.toolbar && React.createElement(related.toolbar)}
       {!active && (
         <div className="px-5 py-2 flex flex-col items-center h-full justify-center text-center text-neutral-500 text-xs">

@@ -13,6 +13,11 @@ import {
   Minus,
   Plus,
   ChevronUp,
+  Columns,
+  Grid,
+  Rows,
+  LayoutIcon,
+  Eye,
 } from "lucide-react";
 import {
   Select,
@@ -32,10 +37,13 @@ import {
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export const TextSettings = () => {
   return (
     <React.Fragment>
+      {/* Layout Setting Section */}
+      <LayoutPanel />
       {/* Spacing Setting Section */}
       <SpacingPanel />
       {/* Size setting Section */}
@@ -177,6 +185,167 @@ export const TextSettings = () => {
     </React.Fragment>
   );
 };
+
+export function LayoutPanel() {
+  const [isOpen, setIsOpen] = React.useState(true);
+  const [direction, setDirection] = React.useState<"horizontal" | "vertical">(
+    "horizontal",
+  );
+
+  return (
+    <Card className="border-0 rounded-none shadow-none bg-gray-100">
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <CardHeader className="py-4 px-6">
+          <CollapsibleTrigger asChild>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-base font-medium">Layout</CardTitle>
+              {isOpen ? (
+                <ChevronUp className="h-4 w-4 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              )}
+            </div>
+          </CollapsibleTrigger>
+        </CardHeader>
+        <CollapsibleContent>
+          <CardContent className="px-6 pb-4 space-y-6">
+            {/* Display Section */}
+            <div className="space-y-2">
+              <Label className="text-sm text-muted-foreground">Display</Label>
+              <div className="flex gap-2">
+                <Toggle
+                  variant="outline"
+                  size="sm"
+                  aria-label="Toggle columns"
+                >
+                  <Columns className="h-4 w-4" />
+                </Toggle>
+                <Toggle
+                  variant="outline"
+                  size="sm"
+                  aria-label="Toggle grid"
+                  pressed
+                >
+                  <Grid className="h-4 w-4" />
+                </Toggle>
+                <Toggle
+                  variant="outline"
+                  size="sm"
+                  aria-label="Toggle rows"
+                >
+                  <Rows className="h-4 w-4" />
+                </Toggle>
+                <Toggle
+                  variant="outline"
+                  size="sm"
+                  aria-label="Toggle layout"
+                >
+                  <LayoutIcon className="h-4 w-4" />
+                </Toggle>
+                <Toggle
+                  variant="outline"
+                  size="sm"
+                  aria-label="Toggle visibility"
+                >
+                  <Eye className="h-4 w-4" />
+                </Toggle>
+              </div>
+            </div>
+
+            {/* Direction Section */}
+            <div className="space-y-2">
+              <Label className="text-sm text-muted-foreground">Direction</Label>
+              <div className="flex gap-2">
+                <Button
+                  variant={direction === "horizontal" ? "default" : "outline"}
+                  size="sm"
+                  className={cn(
+                    "flex-1",
+                    direction === "horizontal" &&
+                      "bg-primary text-primary-foreground",
+                  )}
+                  onClick={() => setDirection("horizontal")}
+                >
+                  Horizontal
+                </Button>
+                <Button
+                  variant={direction === "vertical" ? "default" : "outline"}
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => setDirection("vertical")}
+                >
+                  Vertical
+                </Button>
+              </div>
+            </div>
+
+            {/* Align Section */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm text-muted-foreground">Align</Label>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-4 w-4"
+                >
+                  <Plus className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Justify Section */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm text-muted-foreground">Justify</Label>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-4 w-4"
+                >
+                  <Plus className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Gap Section */}
+            <div className="space-y-4">
+              <Label className="text-sm text-muted-foreground">Gap</Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-xs">Columns</Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      className="h-8"
+                      min={0}
+                    />
+                    <span className="text-xs text-muted-foreground">PX</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs">Rows</Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      className="h-8"
+                      min={0}
+                    />
+                    <span className="text-xs text-muted-foreground">PX</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </CollapsibleContent>
+      </Collapsible>
+    </Card>
+  );
+}
 
 interface TypographySettings {
   fontFamily: string;
