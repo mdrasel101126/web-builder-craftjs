@@ -1,8 +1,9 @@
-import { useNode, UserComponent } from "@craftjs/core";
+import { useEditor, useNode, UserComponent } from "@craftjs/core";
 import { Button as ShadButton } from "@/components/ui/button"; // ShadCN button
 import { cn } from "@/lib/utils"; // Ensure cn is properly imported
 import { Text } from "../Text";
 import React from "react";
+import ContentEditable from "react-contenteditable";
 
 type ButtonProps = {
   background?: string;
@@ -15,7 +16,7 @@ type ButtonProps = {
 
 // Define the component as a Craft.js component using UserComponent
 export const Button: UserComponent<ButtonProps> = ({
-  text,
+  text = "Hello world",
   textComponent,
   color = "text-gray-900",
   buttonStyle = "full",
@@ -24,15 +25,18 @@ export const Button: UserComponent<ButtonProps> = ({
 }) => {
   const {
     connectors: { connect },
+    setProp,
   } = useNode();
-
+  const { enabled } = useEditor((state) => ({
+    enabled: state.options.enabled,
+  }));
   return (
     <ShadButton
       ref={(node) => {
         if (node) {
           connect(node);
         }
-      }} // Ensures ref is applied only when valid
+      }}
       className={cn(
         "rounded px-4 py-2 w-full",
         background,
@@ -40,10 +44,14 @@ export const Button: UserComponent<ButtonProps> = ({
         buttonStyle === "outline" ? "border border-gray-500" : "shadow-md",
       )}
     >
-      <Text
-        {...textComponent}
-        text={text}
-        className={cn(color)}
+      <ContentEditable
+        innerRef={connect}
+        html={text}
+        disabled={!enabled}
+        onChange={(e) => {
+          setProp((prop) => (prop.text = e.target.value), 500);
+        }}
+        className="focus:outline cursor-text"
       />
     </ShadButton>
   );

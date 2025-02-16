@@ -43,7 +43,7 @@ export const TextSettings = () => {
   return (
     <React.Fragment>
       {/* Layout Setting Section */}
-      <LayoutPanel />
+      {/*  <LayoutPanel /> */}
       {/* Spacing Setting Section */}
       <SpacingPanel />
       {/* Size setting Section */}
