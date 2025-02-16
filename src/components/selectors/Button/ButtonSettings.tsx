@@ -5,9 +5,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { TypographyPanel } from "../Text/TextSettings";
 
 export const ButtonSettings = () => {
-  const {
+  /*   const {
     actions: { setProp },
     background,
     color,
@@ -18,17 +19,15 @@ export const ButtonSettings = () => {
     color: node.data.props.color,
     margin: node.data.props.margin,
     buttonStyle: node.data.props.buttonStyle,
-  }));
+  })); */
 
   return (
-    <div className="space-y-4">
-      {/* Colors Section */}
+    /*  <div className="space-y-4">
       <Card>
         <CardHeader>
           <h4 className="text-sm font-semibold">Colors</h4>
         </CardHeader>
         <CardContent className="space-y-3">
-          {/* Background Color */}
           <div className="flex flex-col space-y-1">
             <Label>Background</Label>
             <Input
@@ -39,8 +38,6 @@ export const ButtonSettings = () => {
               }
             />
           </div>
-
-          {/* Text Color */}
           <div className="flex flex-col space-y-1">
             <Label>Text Color</Label>
             <Input
@@ -53,8 +50,6 @@ export const ButtonSettings = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Margin Section */}
       <Card>
         <CardHeader>
           <h4 className="text-sm font-semibold">Margin</h4>
@@ -78,8 +73,6 @@ export const ButtonSettings = () => {
           ))}
         </CardContent>
       </Card>
-
-      {/* Button Style Section */}
       <Card>
         <CardHeader>
           <h4 className="text-sm font-semibold">Button Style</h4>
@@ -108,6 +101,9 @@ export const ButtonSettings = () => {
           </RadioGroup>
         </CardContent>
       </Card>
-    </div>
+    </div> */
+    <React.Fragment>
+      <TypographyPanel />
+    </React.Fragment>
   );
 };

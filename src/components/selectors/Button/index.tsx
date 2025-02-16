@@ -4,8 +4,20 @@ import { cn } from "@/lib/utils"; // Ensure cn is properly imported
 import { Text } from "../Text";
 import React from "react";
 import ContentEditable from "react-contenteditable";
-
+import { ButtonSettings } from "./ButtonSettings";
+type Variant =
+  | "default"
+  | "destructive"
+  | "ghost"
+  | "link"
+  | "outline"
+  | "secondary"
+  | null
+  | undefined;
+type Size = "default" | "sm" | "lg" | "icon" | null | undefined;
 type ButtonProps = {
+  variant?: Variant;
+  size?: Size;
   background?: string;
   color?: string;
   buttonStyle?: "full" | "outline";
@@ -16,8 +28,9 @@ type ButtonProps = {
 
 // Define the component as a Craft.js component using UserComponent
 export const Button: UserComponent<ButtonProps> = ({
-  text = "Hello world",
-  textComponent,
+  text = "Button",
+  variant = "default",
+  size = "default",
   color = "text-gray-900",
   buttonStyle = "full",
   background = "bg-white",
@@ -37,6 +50,8 @@ export const Button: UserComponent<ButtonProps> = ({
           connect(node);
         }
       }}
+      variant={variant}
+      size={size}
       className={cn(
         "rounded px-4 py-2 w-full",
         background,
@@ -51,7 +66,7 @@ export const Button: UserComponent<ButtonProps> = ({
         onChange={(e) => {
           setProp((prop) => (prop.text = e.target.value), 500);
         }}
-        className="focus:outline cursor-text"
+        className="focus:outline cursor-text w-full"
       />
     </ShadButton>
   );
@@ -66,9 +81,8 @@ Button.craft = {
     buttonStyle: "full",
     text: "Button",
     margin: "m-2",
-    textComponent: {
-      ...Text.craft.props,
-      textAlign: "center",
-    },
+  },
+  related: {
+    toolbar: ButtonSettings,
   },
 };
