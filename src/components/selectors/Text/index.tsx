@@ -1,4 +1,4 @@
-import { useNode, useEditor } from "@craftjs/core";
+import { useNode, useEditor, UserComponent } from "@craftjs/core";
 import React from "react";
 import ContentEditable from "react-contenteditable";
 
@@ -40,7 +40,7 @@ export type TextProps = {
   text: string;
 };
 
-export const Text = ({
+export const Text: UserComponent<Partial<TextProps>> = ({
   fontFamily = "Arial",
   fontSize,
   textAlign,
@@ -56,7 +56,7 @@ export const Text = ({
   height = { value: "100", unit: "%" },
   shadow,
   text = "Text",
-}: Partial<TextProps>) => {
+}) => {
   const {
     connectors: { connect },
     setProp,

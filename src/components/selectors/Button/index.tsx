@@ -5,6 +5,18 @@ import { Text } from "../Text";
 import React from "react";
 import ContentEditable from "react-contenteditable";
 import { ButtonSettings } from "./ButtonSettings";
+
+type FontKey = "Inter" | "Roboto" | "Arial" | "Poppins" | "Rajdhani";
+
+type FontMap = Record<FontKey, string>;
+
+const fonts: FontMap = {
+  Inter: "font-inter",
+  Roboto: "font-roboto",
+  Arial: "font-arial",
+  Poppins: "font-poppins",
+  Rajdhani: "font-rajdhani",
+};
 type Variant =
   | "default"
   | "destructive"
@@ -16,25 +28,42 @@ type Variant =
   | undefined;
 type Size = "default" | "sm" | "lg" | "icon" | null | undefined;
 type ButtonProps = {
+  fontFamily: FontKey;
+  fontSize: string;
+  textAlign: string;
+  fontWeight: string;
+  color: Record<"r" | "g" | "b" | "a", string> | string;
+  opacity: string;
+  isUnderline: boolean;
+  isBold: boolean;
+  isItalic: boolean;
   variant?: Variant;
   size?: Size;
   background?: string;
-  color?: string;
   buttonStyle?: "full" | "outline";
-  margin?: string;
+  margin?: [string, string, string, string];
+  padding?: [string, string, string, string];
   text?: string;
   textComponent?: any;
 };
 
 // Define the component as a Craft.js component using UserComponent
-export const Button: UserComponent<ButtonProps> = ({
+export const Button: UserComponent<Partial<ButtonProps>> = ({
+  fontFamily = "Arial",
+  fontSize,
+  textAlign = "center",
+  fontWeight,
+  color = "#000000",
+  opacity = "100",
+  isUnderline = false,
+  isBold = false,
+  isItalic = false,
   text = "Button",
   variant = "default",
   size = "default",
-  color = "text-gray-900",
+  margin = ["0", "0", "0", "0"],
   buttonStyle = "full",
   background = "bg-white",
-  margin = "m-2",
 }) => {
   const {
     connectors: { connect },
@@ -54,10 +83,19 @@ export const Button: UserComponent<ButtonProps> = ({
       size={size}
       className={cn(
         "rounded px-4 py-2 w-full",
-        background,
-        margin,
         buttonStyle === "outline" ? "border border-gray-500" : "shadow-md",
+        fonts[fontFamily],
+        { underline: isUnderline },
+        { "font-bold": isBold },
+        { italic: isItalic },
       )}
+      style={{
+        fontWeight: `${fontWeight}`,
+        textAlign: `${textAlign}` as CanvasTextAlign,
+        opacity: `${opacity}%`,
+        color: `${color}`,
+        fontSize: `${fontSize}px`,
+      }}
     >
       <ContentEditable
         innerRef={connect}
@@ -76,11 +114,16 @@ export const Button: UserComponent<ButtonProps> = ({
 Button.craft = {
   displayName: "Button",
   props: {
-    background: "bg-white",
-    color: "text-gray-900",
-    buttonStyle: "full",
+    fontFamily: "Arial",
+    fontSize: "16",
+    textAlign: "left",
+    fontWeight: "Normal",
+    color: "#000000",
+    opacity: "100",
+    isUnderline: false,
+    isBold: false,
+    isItalic: false,
     text: "Button",
-    margin: "m-2",
   },
   related: {
     toolbar: ButtonSettings,
