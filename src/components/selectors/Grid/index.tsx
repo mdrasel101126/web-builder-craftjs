@@ -2,6 +2,7 @@ import React from "react";
 import { useNode, Element, UserComponent } from "@craftjs/core";
 import { Container } from "../Container";
 import GridDiv from "../GridDiv";
+import { GridSettings } from "./GridSettings";
 
 interface GridProps {
   rows: number;
@@ -10,7 +11,10 @@ interface GridProps {
 }
 
 const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
-  const { connectors, selected } = useNode((node) => ({
+  const {
+    connectors: { connect, drag },
+    selected,
+  } = useNode((node) => ({
     selected: node.events.selected,
   }));
 
@@ -18,7 +22,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
     <div
       ref={(ref) => {
         if (ref) {
-          connectors.connect(ref as HTMLDivElement);
+          connect(drag(ref as HTMLDivElement));
         }
       }}
       className={`grid w-full`}
@@ -46,47 +50,6 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
   );
 };
 
-// Craft.js Settings Panel
-const GridSettings = () => {
-  const {
-    actions: { setProp },
-    rows,
-    columns,
-    gap,
-  } = useNode((node) => ({
-    rows: node.data.props.rows,
-    columns: node.data.props.columns,
-    gap: node.data.props.gap,
-  }));
-
-  return (
-    <div className="p-4">
-      <label>Rows</label>
-      <input
-        type="number"
-        value={rows}
-        onChange={(e) =>
-          setProp((props: any) => (props.rows = Number(e.target.value)))
-        }
-      />
-      <label>Columns</label>
-      <input
-        type="number"
-        value={columns}
-        onChange={(e) =>
-          setProp((props: any) => (props.columns = Number(e.target.value)))
-        }
-      />
-      <label>Gap</label>
-      <input
-        type="text"
-        value={gap}
-        onChange={(e) => setProp((props: any) => (props.gap = e.target.value))}
-      />
-    </div>
-  );
-};
-
 // Export with Craft.js Configuration
 Grid.craft = {
   props: {
@@ -98,7 +61,7 @@ Grid.craft = {
     canDrag: () => true,
   },
   related: {
-    settings: GridSettings,
+    toolbar: GridSettings,
   },
 };
 
