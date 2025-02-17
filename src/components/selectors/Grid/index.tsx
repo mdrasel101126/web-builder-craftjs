@@ -1,5 +1,7 @@
 import React from "react";
 import { useNode, Element, UserComponent } from "@craftjs/core";
+import { Container } from "../Container";
+import GridDiv from "../GridDiv";
 
 interface GridProps {
   rows: number;
@@ -8,11 +10,7 @@ interface GridProps {
 }
 
 const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
-  const {
-    connectors: { connect },
-    selected,
-    actions,
-  } = useNode((node) => ({
+  const { connectors, selected } = useNode((node) => ({
     selected: node.events.selected,
   }));
 
@@ -20,10 +18,10 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
     <div
       ref={(ref) => {
         if (ref) {
-          connect(ref as HTMLDivElement);
+          connectors.connect(ref as HTMLDivElement);
         }
       }}
-      className={`grid w-full p-2`}
+      className={`grid w-full`}
       style={{
         display: "grid",
         gridTemplateRows: `repeat(${rows}, minmax(50px, auto))`,
@@ -37,9 +35,10 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           key={index}
           id={`grid-item-${index}`}
           is="div"
+          canvas // Allows drag-and-drop inside the grid item
         >
           <div className="p-4 border border-gray-300 min-h-[50px] flex items-center justify-center">
-            Item {index + 1}
+            Drop here
           </div>
         </Element>
       ))}

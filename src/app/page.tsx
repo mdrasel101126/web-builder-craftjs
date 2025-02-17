@@ -10,6 +10,7 @@ import { Custom3, Custom3BtnDrop } from "../components/selectors/Custom3";
 import { Video } from "../components/selectors/Video";
 import Grid from "@/components/selectors/Grid";
 import GridComponent from "@/components/selectors/Grid2";
+import GridDiv from "@/components/selectors/GridDiv";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           Container,
           Grid,
           GridComponent,
+          GridDiv,
           Text,
           Custom1,
           Custom2,

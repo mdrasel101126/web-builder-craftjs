@@ -18,6 +18,7 @@ import { Button } from "@/components/selectors/Button";
 import Grid from "@/components/selectors/Grid";
 import { Grid2X2, Grid2X2Check } from "lucide-react";
 import GridComponent from "@/components/selectors/Grid2";
+import GridDiv from "@/components/selectors/GridDiv";
 
 export const Toolbox = () => {
   const {
@@ -75,7 +76,7 @@ export const Toolbox = () => {
                     columns={2}
                     gap="16px"
                     rows={2}
-                  />,
+                  ></Element>,
                 );
               }
             }}
