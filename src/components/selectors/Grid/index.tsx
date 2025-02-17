@@ -23,7 +23,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           connect(ref as HTMLDivElement);
         }
       }}
-      className={`grid w-full`}
+      className={`grid w-full p-2`}
       style={{
         display: "grid",
         gridTemplateRows: `repeat(${rows}, minmax(50px, auto))`,
@@ -94,6 +94,9 @@ Grid.craft = {
     rows: 2,
     columns: 2,
     gap: "10px",
+  },
+  rules: {
+    canDrag: () => true,
   },
   related: {
     settings: GridSettings,

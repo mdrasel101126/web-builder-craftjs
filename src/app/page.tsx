@@ -9,6 +9,7 @@ import { Custom2, Custom2VideoDrop } from "../components/selectors/Custom2";
 import { Custom3, Custom3BtnDrop } from "../components/selectors/Custom3";
 import { Video } from "../components/selectors/Video";
 import Grid from "@/components/selectors/Grid";
+import GridComponent from "@/components/selectors/Grid2";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         resolver={{
           Container,
           Grid,
+          GridComponent,
           Text,
           Custom1,
           Custom2,
