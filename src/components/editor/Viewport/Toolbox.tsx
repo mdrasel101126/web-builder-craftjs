@@ -15,6 +15,8 @@ import { Container } from "../../selectors/Container";
 import { Text } from "../../selectors/Text";
 import { Video } from "../../selectors/Video";
 import { Button } from "@/components/selectors/Button";
+import Grid from "@/components/selectors/Grid";
+import { Grid2X2 } from "lucide-react";
 
 export const Toolbox = () => {
   const {
@@ -58,6 +60,32 @@ export const Toolbox = () => {
                 </div>
               </TooltipTrigger>
               <TooltipContent>Container</TooltipContent>
+            </Tooltip>
+          </div>
+          {/* Grid */}
+          <div
+            ref={(ref) => {
+              if (ref) {
+                create(
+                  ref,
+                  <Element
+                    canvas
+                    is={Grid}
+                    columns={2}
+                    gap="16px"
+                    rows={2}
+                  />,
+                );
+              }
+            }}
+          >
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="m-2 pb-2 cursor-move">
+                  <Grid2X2 className="w-5 h-5 text-gray-500" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>Grid</TooltipContent>
             </Tooltip>
           </div>
 
