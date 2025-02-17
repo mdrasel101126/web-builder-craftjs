@@ -76,7 +76,7 @@ export const Toolbox = () => {
                     columns={2}
                     gap="16px"
                     rows={2}
-                  ></Element>,
+                  />,
                 );
               }
             }}

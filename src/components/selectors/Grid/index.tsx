@@ -35,7 +35,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           key={index}
           id={`grid-item-${index}`}
           is="div"
-          canvas // Allows drag-and-drop inside the grid item
+          canvas
         >
           <div className="p-4 border border-gray-300 min-h-[50px] flex items-center justify-center">
             Drop here
@@ -47,7 +47,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
 };
 
 // Craft.js Settings Panel
-const GridSettings: React.FC = () => {
+const GridSettings = () => {
   const {
     actions: { setProp },
     rows,
