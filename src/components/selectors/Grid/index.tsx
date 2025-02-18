@@ -40,7 +40,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           id={`grid-item-${index}`}
           is="div"
           canvas
-          className="p-4 group-hover:border border-gray-300 min-h-[50px] h-fit flex items-center justify-center"
+          className="p-4 group-hover:border border-gray-300 min-h-[100px] h-fit "
         ></Element>
       ))}
     </div>
