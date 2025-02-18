@@ -89,7 +89,8 @@ export const Text: UserComponent<Partial<TextProps>> = ({
         opacity: `${opacity}%`,
         padding: `${padding[0]}px ${padding[1]}px ${padding[2]}px ${padding[3]}px`,
         width: `${width.value}${width.unit}`,
-        height: `${height.value}${height.unit}`,
+        /* height: `${height.value}${height.unit}`, */
+        height: "auto",
       }}
     />
   );

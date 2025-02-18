@@ -25,7 +25,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           connect(drag(ref as HTMLDivElement));
         }
       }}
-      className={`grid w-full`}
+      className={`grid w-full group`}
       style={{
         display: "grid",
         gridTemplateRows: `repeat(${rows}, minmax(50px, auto))`,
@@ -40,11 +40,8 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
           id={`grid-item-${index}`}
           is="div"
           canvas
-        >
-          <div className="p-4 border border-gray-300 min-h-[50px] flex items-center justify-center">
-            Drop here
-          </div>
-        </Element>
+          className="p-4 group-hover:border border-gray-300 min-h-[50px] h-fit flex items-center justify-center"
+        ></Element>
       ))}
     </div>
   );
