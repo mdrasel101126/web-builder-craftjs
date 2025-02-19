@@ -1,36 +1,40 @@
 import { Element, useNode, UserComponent } from "@craftjs/core";
 import React from "react";
 import { GridDivSettings } from "./GridDivSettings";
+import { Container } from "../Container";
 
-const GridDiv: UserComponent = ({ id }) => {
+interface GridDivProps {
+  id: string | number;
+}
+
+const GridDiv: UserComponent<GridDivProps> = ({ id }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
+
   return (
-    <Element
-      ref={(node: any) => {
-        if (node) {
-          connect(node);
+    <div
+      ref={(ref) => {
+        if (ref) {
+          connect(ref);
         }
       }}
-      id={"id-" + id}
-      is="Div"
-      canvas
-      className="p-4 group-hover:border border-gray-300 min-h-[100px] h-fit "
-      style={{}}
-    />
+      className="p-4 border border-gray-300 min-h-[100px] h-fit"
+    >
+      <Element
+        id={"id-" + id}
+        canvas
+        is={Container}
+        /* className="group-hover:border w-full h-full" */
+      />
+    </div>
   );
 };
 
 export default GridDiv;
 
 GridDiv.craft = {
-  displayName: "Div",
-  props: {
-    rows: 2,
-    columns: 2,
-    gap: "10px",
-  },
+  displayName: "GridDiv",
   related: {
     toolbar: GridDivSettings,
   },
