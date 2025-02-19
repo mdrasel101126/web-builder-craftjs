@@ -90,50 +90,6 @@ export const Toolbox = () => {
               <TooltipContent>Grid</TooltipContent>
             </Tooltip>
           </div>
-          {/* grid 2 */}
-          <div
-            ref={(ref) => {
-              if (ref) {
-                create(
-                  ref,
-                  <Element
-                    canvas
-                    is={GridComponent}
-                    columns={3}
-                    rows={3}
-                  >
-                    <Element
-                      canvas
-                      is={Button}
-                      variant="default"
-                    >
-                      Button
-                    </Element>
-                    <Element
-                      canvas
-                      is={Text}
-                      fontSize="12"
-                      textAlign="left"
-                      text="Hello"
-                    />
-                    <Element
-                      canvas
-                      is={Video}
-                    />
-                  </Element>,
-                );
-              }
-            }}
-          >
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="m-2 pb-2 cursor-move">
-                  <Grid2X2Check className="w-5 h-5 text-gray-500" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>Grid 2</TooltipContent>
-            </Tooltip>
-          </div>
 
           {/* Text */}
           <div

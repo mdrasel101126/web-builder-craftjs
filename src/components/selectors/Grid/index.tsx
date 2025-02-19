@@ -46,6 +46,7 @@ const Grid: UserComponent<GridProps> = ({ rows, columns, gap }) => {
 
 // Export with Craft.js Configuration
 Grid.craft = {
+  displayName: "Grid",
   props: {
     rows: 2,
     columns: 2,
