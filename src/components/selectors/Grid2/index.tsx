@@ -1,114 +1,73 @@
+// components/craft/Grid.tsx
 import React from "react";
-import { useNode, Element, UserComponent } from "@craftjs/core";
+import { useNode } from "@craftjs/core";
+import { Card, CardContent } from "@/components/ui/card";
+import { GridItem } from "./GridItem";
 
-export const GridComponent: UserComponent = ({
-  children,
-  rows,
-  columns,
-  rowGap,
-  columnGap,
-}) => {
+// Define props type for Grid
+interface GridProps {
+  columns?: number | { base?: number; sm?: number; md?: number; lg?: number };
+  gap?: number;
+  children: React.ReactNode;
+}
+
+// Define node props shape
+interface GridNodeProps {
+  columns: number | { base?: number; sm?: number; md?: number; lg?: number };
+  gap: number;
+}
+
+// Extend FC with Craft.js metadata
+interface GridComponent extends React.FC<GridProps> {
+  craft: {
+    displayName: string;
+    props: GridNodeProps;
+    rules: {
+      canDrag: () => boolean;
+      canMoveIn: (incoming: any) => boolean;
+    };
+  };
+}
+
+export const GridTwo = (({ columns = { base: 12 }, gap = 4, children }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
 
+  const columnClasses =
+    typeof columns === "number"
+      ? `grid-cols-${columns}`
+      : [
+          `grid-cols-${columns.base ?? 12}`,
+          columns.sm && `sm:grid-cols-${columns.sm}`,
+          columns.md && `md:grid-cols-${columns.md}`,
+          columns.lg && `lg:grid-cols-${columns.lg}`,
+        ]
+          .filter(Boolean)
+          .join(" ");
+
   return (
-    <div
+    <Card
       ref={(ref) => {
         if (ref) {
           connect(drag(ref));
         }
       }}
-      style={{
-        display: "grid",
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gap: `${rowGap}px ${columnGap}px`,
-        padding: "10px",
-        border: "1px dashed #ccc",
-        minHeight: "200px",
-      }}
+      className={`grid ${columnClasses} gap-${gap}`}
     >
-      {children || (
-        <Element
-          id="idx"
-          canvas
-        />
-      )}
-    </div>
+      <CardContent className="p-4">{children}</CardContent>
+    </Card>
   );
-};
+}) as GridComponent;
 
-export const GridSettings = () => {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
-
-  return (
-    <div>
-      <div>
-        <label>Rows:</label>
-        <input
-          type="number"
-          value={props.rows}
-          onChange={(e) =>
-            setProp((props: any) => (props.rows = parseInt(e.target.value)))
-          }
-        />
-      </div>
-      <div>
-        <label>Columns:</label>
-        <input
-          type="number"
-          value={props.columns}
-          onChange={(e) =>
-            setProp((props: any) => (props.columns = parseInt(e.target.value)))
-          }
-        />
-      </div>
-      <div>
-        <label>Row Gap:</label>
-        <input
-          type="number"
-          value={props.rowGap}
-          onChange={(e) =>
-            setProp((props: any) => (props.rowGap = parseInt(e.target.value)))
-          }
-        />
-      </div>
-      <div>
-        <label>Column Gap:</label>
-        <input
-          type="number"
-          value={props.columnGap}
-          onChange={(e) =>
-            setProp(
-              (props: any) => (props.columnGap = parseInt(e.target.value)),
-            )
-          }
-        />
-      </div>
-    </div>
-  );
-};
-
-GridComponent.craft = {
+GridTwo.craft = {
   displayName: "Grid",
   props: {
-    rows: 3,
-    columns: 3,
-    rowGap: 10,
-    columnGap: 10,
+    columns: { base: 12 },
+    gap: 4,
   },
   rules: {
     canDrag: () => true,
-  },
-  related: {
-    settings: GridSettings, // We'll define this next
+    canMoveIn: (incoming: any) => incoming.data.type === GridItem,
   },
 };
-
-export default GridComponent;

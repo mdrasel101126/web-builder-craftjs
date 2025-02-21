@@ -9,8 +9,9 @@ import { Custom2, Custom2VideoDrop } from "../components/selectors/Custom2";
 import { Custom3, Custom3BtnDrop } from "../components/selectors/Custom3";
 import { Video } from "../components/selectors/Video";
 import Grid from "@/components/selectors/Grid";
-import GridComponent from "@/components/selectors/Grid2";
 import GridDiv from "@/components/selectors/GridDiv";
+import { GridTwo } from "@/components/selectors/Grid2";
+import { GridItem } from "@/components/selectors/Grid2/GridItem";
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
       <Editor
         resolver={{
           Container,
+          GridTwo,
+          GridItem,
           Grid,
-          GridComponent,
           GridDiv,
           Text,
           Custom1,
@@ -45,6 +47,25 @@ function App() {
               padding={["40", "40", "40", "40"]}
               custom={{ displayName: "App" }}
             >
+              <Element
+                is={GridTwo}
+                columns={{ base: 1, sm: 2, md: 4, lg: 12 }}
+                gap={6}
+                canvas
+              >
+                <Element
+                  is={GridItem}
+                  span={4}
+                />
+                <Element
+                  is={GridItem}
+                  span={6}
+                />
+                <Element
+                  is={GridItem}
+                  span={2}
+                />
+              </Element>
               <Element
                 canvas
                 is={Container}

@@ -17,8 +17,7 @@ import { Video } from "../../selectors/Video";
 import { Button } from "@/components/selectors/Button";
 import Grid from "@/components/selectors/Grid";
 import { Grid2X2, Grid2X2Check } from "lucide-react";
-import GridComponent from "@/components/selectors/Grid2";
-import GridDiv from "@/components/selectors/GridDiv";
+import { GridTwo } from "@/components/selectors/Grid2";
 
 export const Toolbox = () => {
   const {
@@ -27,6 +26,34 @@ export const Toolbox = () => {
   } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
+
+  /*   const addGrid = () => {
+    const gridNode = query.createNode({
+      type: Grid, 
+      props: { columns: 12, gap: 4 },
+    });
+
+    actions.add(gridNode, "ROOT");
+  };
+
+  const addGridItem = () => {
+    const gridNodes = query
+      .getNodes()
+      .filter((node: any) => node.data.type === Grid);
+
+    if (gridNodes.length === 0) {
+      alert("Please add a Grid first!");
+      return;
+    }
+
+    const gridItemNode = query.createNode({
+      type: GridItem,
+      props: { span: 4 },
+    });
+
+    const targetGridId = gridNodes[0].id;
+    actions.add(gridItemNode, targetGridId);
+  }; */
 
   return (
     <TooltipProvider>
@@ -90,6 +117,19 @@ export const Toolbox = () => {
               <TooltipContent>Grid</TooltipContent>
             </Tooltip>
           </div>
+          {/* Grid Two */}
+          {/*    <button
+            onClick={addGrid}
+            className="mr-2"
+          >
+            Add Grid
+          </button>
+          <button
+            onClick={() => {
+            }}
+          >
+            Add Grid Item
+          </button> */}
 
           {/* Text */}
           <div
