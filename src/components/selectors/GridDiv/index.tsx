@@ -23,8 +23,8 @@ const GridDiv: UserComponent<GridDivProps> = ({ id }) => {
     >
       <Element
         id={"id-" + id}
+        is="div"
         canvas
-        is={Container}
       />
     </div>
   );
