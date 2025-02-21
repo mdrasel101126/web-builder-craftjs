@@ -47,6 +47,11 @@ function App() {
             >
               <Element
                 canvas
+                is={GridDiv}
+                id="griddiv"
+              />
+              <Element
+                canvas
                 is={Container}
                 flexDirection="row"
                 width="100%"

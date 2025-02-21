@@ -25,7 +25,6 @@ const GridDiv: UserComponent<GridDivProps> = ({ id }) => {
         id={"id-" + id}
         canvas
         is={Container}
-        /* className="group-hover:border w-full h-full" */
       />
     </div>
   );
