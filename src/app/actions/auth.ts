@@ -1,6 +1,17 @@
 "use server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(1, "Password is required"),
+});
+export async function login(formData: z.infer<typeof loginSchema>) {
+  const data = loginSchema.safeParse(formData);
+  console.log("login", data);
+}
 export async function signUp(formData: FormData) {
   const name = formData.get("name");
   const email = formData.get("email");
