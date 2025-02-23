@@ -47,7 +47,7 @@ function App() {
               padding={["40", "40", "40", "40"]}
               custom={{ displayName: "App" }}
             >
-              <Element
+              {/*  <Element
                 is={GridTwo}
                 columns={{ base: 1, sm: 2, md: 4, lg: 12 }}
                 gap={6}
@@ -65,7 +65,7 @@ function App() {
                   is={GridItem}
                   span={2}
                 />
-              </Element>
+              </Element> */}
               <Element
                 canvas
                 is={Container}
