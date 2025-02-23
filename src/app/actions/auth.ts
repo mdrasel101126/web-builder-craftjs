@@ -1,4 +1,5 @@
 "use server";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 export async function signUp(formData: FormData) {
   const name = formData.get("name");
@@ -96,4 +97,53 @@ async function invalidateResetToken(token: string) {
   // TODO: Implement this function to invalidate the used token in your database
   console.log("Invalidating token:", token);
   // Placeholder implementation
+}
+
+const confirmEmailSchema = z.object({
+  code: z.string().min(6, "Code must be at least 6 characters"),
+});
+
+export async function confirmEmail(formData: FormData) {
+  const rawCode = formData.get("code");
+
+  const parsed = confirmEmailSchema.safeParse({ code: rawCode });
+
+  if (!parsed.success) {
+    return { error: parsed.error.format().code?._errors[0] || "Invalid input" };
+  }
+
+  const code = parsed.data.code;
+
+  // Simulate checking code in DB
+  const isValid = code === "123456"; // Replace with actual DB check
+
+  if (!isValid) {
+    return { error: "Invalid confirmation code." };
+  }
+
+  // Redirect upon success
+  redirect("/dashboard");
+}
+
+const resendEmailSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+export async function resendEmail(formData: FormData) {
+  const rawEmail = formData.get("email");
+
+  const parsed = resendEmailSchema.safeParse({ email: rawEmail });
+
+  if (!parsed.success) {
+    return {
+      error: parsed.error.format().email?._errors[0] || "Invalid input",
+    };
+  }
+
+  const email = parsed.data.email;
+
+  // Simulate sending email (Replace with actual email sending logic)
+  console.log(`Sending confirmation email to: ${email}`);
+
+  return { success: "Confirmation email sent successfully!" };
 }
