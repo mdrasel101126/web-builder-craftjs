@@ -160,3 +160,37 @@ export async function resendEmail(formData: FormData) {
 
   return { success: "Confirmation email sent successfully!" };
 }
+
+const manageAccountSchema = z.object({
+  newEmail: z.string().email("Invalid email address").optional(),
+  newPassword: z
+    .string()
+    .min(6, "New password must be at least 6 characters")
+    .optional(),
+  oldPassword: z.string().min(6, "Old password is required"),
+});
+
+export async function updateAccount(
+  formData: z.infer<typeof manageAccountSchema>,
+) {
+  const parsed = manageAccountSchema.safeParse(formData);
+
+  console.log("manage data:", parsed);
+
+  if (!parsed.success) {
+    return { error: parsed.error.format() };
+  }
+
+  const { newEmail, newPassword, oldPassword } = parsed.data;
+
+  // Simulate a database check for old password
+  const isOldPasswordCorrect = oldPassword === "currentPassword"; // Replace with actual DB check
+  if (!isOldPasswordCorrect) {
+    return { error: { oldPassword: "Old password is incorrect." } };
+  }
+
+  // Simulate updating email/password
+  console.log("Updating account:", { newEmail, newPassword });
+
+  return { success: "Account updated successfully!" };
+}
