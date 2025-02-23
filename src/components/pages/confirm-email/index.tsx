@@ -35,9 +35,7 @@ export default function ConfirmEmailForm() {
   const onSubmit = async (data: { code: string }) => {
     setServerError(null);
     setLoading(true);
-    const formData = new FormData();
-    formData.append("code", data.code);
-    const result = await confirmEmail(formData);
+    const result = await confirmEmail(data);
 
     setLoading(false);
 

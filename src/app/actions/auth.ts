@@ -12,19 +12,21 @@ export async function login(formData: z.infer<typeof loginSchema>) {
   const data = loginSchema.safeParse(formData);
   console.log("login", data);
 }
-export async function signUp(formData: FormData) {
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const password = formData.get("password");
 
-  // Here you would typically:
-  // 1. Validate the input
-  // 2. Check if the user already exists
-  // 3. Hash the password
-  // 4. Create the user in your database
-  // 5. Create a session or token for the user
-
-  console.log("Signing up:", { name, email, password });
+const signUpSchema = z.object({
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+});
+export async function signUp(formData: z.infer<typeof signUpSchema>) {
+  const data = signUpSchema.safeParse(formData);
+  console.log("sign", data);
 }
 
 const forgotPasswordSchema = z.object({
@@ -114,10 +116,10 @@ const confirmEmailSchema = z.object({
   code: z.string().min(6, "Code must be at least 6 characters"),
 });
 
-export async function confirmEmail(formData: FormData) {
-  const rawCode = formData.get("code");
-
-  const parsed = confirmEmailSchema.safeParse({ code: rawCode });
+export async function confirmEmail(
+  formData: z.infer<typeof confirmEmailSchema>,
+) {
+  const parsed = confirmEmailSchema.safeParse(formData);
 
   if (!parsed.success) {
     return { error: parsed.error.format().code?._errors[0] || "Invalid input" };

@@ -50,17 +50,11 @@ export function SignUpForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      const data: any = await signUp(formData);
+      const data: any = await signUp(values);
 
       if (data?.error) {
         return toast.error(data.error);
       }
-
-      /*   router.push("/sign-in"); */
       router.refresh();
       return toast.success("Account created successfully.");
     } catch (error) {
