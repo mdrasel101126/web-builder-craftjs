@@ -1,9 +1,10 @@
+import CoursePlan from "@/components/pages/course-builder/course-plan";
 import React from "react";
 
 const CoursePlanPage = () => {
   return (
     <div>
-      <h1>hellow Course Plan</h1>
+      <CoursePlan />
     </div>
   );
 };

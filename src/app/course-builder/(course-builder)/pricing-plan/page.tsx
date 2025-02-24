@@ -1,9 +1,10 @@
+import PricingPlan from "@/components/pages/course-builder/pricing-plan";
 import React from "react";
 
 const PricingPlanPage = () => {
   return (
     <div>
-      <h1>hello Pricing plan page</h1>
+      <PricingPlan />
     </div>
   );
 };

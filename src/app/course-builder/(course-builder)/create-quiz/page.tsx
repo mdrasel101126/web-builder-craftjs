@@ -1,9 +1,10 @@
+import CreateQuiz from "@/components/pages/course-builder/create-quiz";
 import React from "react";
 
 const CreateQuizPage = () => {
   return (
     <div>
-      <h1>Hello create quiz page</h1>
+      <CreateQuiz />
     </div>
   );
 };

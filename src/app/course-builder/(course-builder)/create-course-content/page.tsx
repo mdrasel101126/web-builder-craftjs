@@ -1,9 +1,10 @@
+import CreateCourseContent from "@/components/pages/course-builder/create-course-content";
 import React from "react";
 
 const CreateCourseContentPage = () => {
   return (
     <div>
-      <h1>Hello create course content page</h1>
+      <CreateCourseContent />
     </div>
   );
 };

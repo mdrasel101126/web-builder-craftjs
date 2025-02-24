@@ -1,9 +1,10 @@
+import CourseWebsite from "@/components/pages/course-builder/course-website";
 import React from "react";
 
 const CourseWebsitePage = () => {
   return (
     <div>
-      <h1>Hello course website page</h1>
+      <CourseWebsite />
     </div>
   );
 };
