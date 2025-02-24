@@ -1,9 +1,10 @@
+import CourseSchedule from "@/components/pages/course-builder/course-schedule";
 import React from "react";
 
 const CourseSchedulePage = () => {
   return (
     <div>
-      <h1>hello course Schedule page</h1>
+      <CourseSchedule />
     </div>
   );
 };
