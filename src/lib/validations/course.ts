@@ -116,3 +116,45 @@ export const pricingPlanSchema = z.discriminatedUnion("type", [
 ]);
 
 export type PricingPlan = z.infer<typeof pricingPlanSchema>;
+
+// course quiz schema
+
+export const questionSchema = z.object({
+  id: z.string(),
+  type: z.enum([
+    "MULTIPLE_CHOICE",
+    "SINGLE_CHOICE",
+    "TRUE_FALSE",
+    "TEXT",
+    "MATCHING",
+  ]),
+  question: z.string().min(1, "Question is required"),
+  points: z.number().min(0, "Points must be non-negative"),
+  options: z
+    .array(
+      z.object({
+        id: z.string(),
+        text: z.string().min(1, "Option text is required"),
+        isCorrect: z.boolean().optional(),
+      }),
+    )
+    .optional(),
+  correctAnswer: z.string().optional(),
+  explanation: z.string().optional(),
+  timeLimit: z.number().min(0).optional(), // in seconds
+});
+
+export const quizSchema = z.object({
+  title: z.string().min(1, "Quiz title is required"),
+  description: z.string().optional(),
+  passingScore: z.number().min(0, "Passing score must be non-negative"),
+  shuffleQuestions: z.boolean().default(false),
+  showResults: z.boolean().default(true),
+  timeLimit: z.number().min(0).optional(), // in minutes
+  questions: z
+    .array(questionSchema)
+    .min(1, "At least one question is required"),
+});
+
+export type Question = z.infer<typeof questionSchema>;
+export type Quiz = z.infer<typeof quizSchema>;
