@@ -84,7 +84,7 @@ export default function QuizBuilder() {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Create Quiz</CardTitle>
+            <CardTitle className="text-2xl">Create Quiz</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs

@@ -158,3 +158,19 @@ export const quizSchema = z.object({
 
 export type Question = z.infer<typeof questionSchema>;
 export type Quiz = z.infer<typeof quizSchema>;
+
+// course schedule schema
+
+export const moduleSchema = z.object({
+  id: z.number(),
+  title: z.string().min(1, "Title is required"),
+  module: z.string().min(1, "Module name is required"),
+  description: z.string().min(1, "Description is required"),
+  icon: z.string(),
+  timeframe: z.string().min(1, "Timeframe is required"),
+});
+
+export const moduleFormSchema = moduleSchema.omit({ id: true });
+
+export type ModuleFormData = z.infer<typeof moduleFormSchema>;
+export type ModuleData = z.infer<typeof moduleSchema>;
