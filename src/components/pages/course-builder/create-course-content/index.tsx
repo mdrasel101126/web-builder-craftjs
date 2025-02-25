@@ -20,14 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  ChevronDown,
-  ChevronRight,
-  Plus,
-  BookOpen,
-  Settings,
-  DollarSign,
-} from "lucide-react";
+import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 
 import {
   type ChapterFormData,
@@ -55,7 +48,7 @@ export default function CourseContent() {
     new Set(),
   );
   const [isChapterDialogOpen, setIsChapterDialogOpen] = useState(false);
-  const [isCreateCourseFormOpen, setIsCreateCourseFormOpen] = useState(false);
+  const [isCreateLessonFormOpen, setIsCreateLessonFormOpen] = useState(false);
   const [activeChapterId, setActiveChapterId] = useState<string | null>(null);
 
   const chapterForm = useForm<ChapterFormData>({
@@ -126,11 +119,12 @@ export default function CourseContent() {
     );
 
     lessonForm.reset();
+    setIsCreateLessonFormOpen(false);
   };
 
   const handleAddLesson = (chapterId: string) => {
     setActiveChapterId(chapterId);
-    setIsCreateCourseFormOpen(true);
+    setIsCreateLessonFormOpen(true);
   };
 
   return (
@@ -231,47 +225,6 @@ export default function CourseContent() {
         </div>
       </div>
 
-      {/* Lesson Dialog */}
-      {/*   <Dialog
-        open={isLessonDialogOpen}
-        onOpenChange={setIsLessonDialogOpen}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create New Lesson</DialogTitle>
-          </DialogHeader>
-          <Form {...lessonForm}>
-            <form
-              onSubmit={lessonForm.handleSubmit(onLessonSubmit)}
-              className="space-y-4 pt-4"
-            >
-              <FormField
-                control={lessonForm.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Lesson Title</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter lesson title"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                className="w-full"
-              >
-                Create Lesson
-              </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog> */}
-
       {/* Main Content */}
       <div className="flex-1 pt-14">
         {chapters.length === 0 && (
@@ -286,7 +239,7 @@ export default function CourseContent() {
         )}
         {chapters?.length > 0 && (
           <>
-            {isCreateCourseFormOpen && (
+            {isCreateLessonFormOpen && (
               <CreateNewLesson
                 onLessonSubmit={onLessonSubmit}
                 lessonForm={lessonForm}
