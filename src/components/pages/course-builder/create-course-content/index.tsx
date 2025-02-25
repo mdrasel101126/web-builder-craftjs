@@ -35,6 +35,7 @@ import {
   chapterSchema,
   lessonSchema,
 } from "@/lib/validations/course";
+import CreateNewLesson from "./CreateNewLesson";
 
 interface Chapter {
   id: string;
@@ -53,9 +54,8 @@ export default function CourseContent() {
   const [expandedChapters, setExpandedChapters] = useState<Set<string>>(
     new Set(),
   );
-  const [selectedChapter, setSelectedChapter] = useState<Chapter | null>(null);
   const [isChapterDialogOpen, setIsChapterDialogOpen] = useState(false);
-  const [isLessonDialogOpen, setIsLessonDialogOpen] = useState(false);
+  const [isCreateCourseFormOpen, setIsCreateCourseFormOpen] = useState(false);
   const [activeChapterId, setActiveChapterId] = useState<string | null>(null);
 
   const chapterForm = useForm<ChapterFormData>({
@@ -68,8 +68,19 @@ export default function CourseContent() {
   const lessonForm = useForm<LessonFormData>({
     resolver: zodResolver(lessonSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      name: "",
+      type: "VIDEO",
+      content: { type: "VIDEO" },
+      description: "",
+      settings: {
+        isDraft: true,
+        isFreePreview: false,
+        hasPrerequisite: false,
+        isDownloadableWeb: false,
+        isDownloadableApp: false,
+        enableDiscussions: true,
+        requireVideoCompletion: false,
+      },
     },
   });
 
@@ -101,16 +112,13 @@ export default function CourseContent() {
     setChapters(
       chapters.map((chapter) => {
         if (chapter.id === activeChapterId) {
+          const newLesson: Lesson = {
+            id: Date.now().toString(),
+            title: data.name,
+          };
           return {
             ...chapter,
-            lessons: [
-              ...chapter.lessons,
-              {
-                id: Date.now().toString(),
-                title: data.title,
-                content: data.content,
-              },
-            ],
+            lessons: [...chapter.lessons, newLesson],
           };
         }
         return chapter;
@@ -118,12 +126,11 @@ export default function CourseContent() {
     );
 
     lessonForm.reset();
-    setIsLessonDialogOpen(false);
   };
 
   const handleAddLesson = (chapterId: string) => {
     setActiveChapterId(chapterId);
-    setIsLessonDialogOpen(true);
+    setIsCreateCourseFormOpen(true);
   };
 
   return (
@@ -225,7 +232,7 @@ export default function CourseContent() {
       </div>
 
       {/* Lesson Dialog */}
-      <Dialog
+      {/*   <Dialog
         open={isLessonDialogOpen}
         onOpenChange={setIsLessonDialogOpen}
       >
@@ -263,11 +270,11 @@ export default function CourseContent() {
             </form>
           </Form>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
       {/* Main Content */}
       <div className="flex-1 pt-14">
-        {chapters.length === 0 ? (
+        {chapters.length === 0 && (
           <div className="flex flex-col items-center justify-center text-center p-8">
             <h2 className="text-2xl font-bold mb-2">
               Please Create Your Chapter!
@@ -276,21 +283,16 @@ export default function CourseContent() {
               Get started by creating your first chapter in the sidebar
             </p>
           </div>
-        ) : (
-          <div className="p-8">
-            {selectedChapter ? (
-              <div>
-                <h2 className="text-2xl font-bold mb-4">
-                  {selectedChapter.title}
-                </h2>
-                {/* Add chapter content editor here */}
-              </div>
-            ) : (
-              <div className="text-center text-muted-foreground">
-                Select a chapter to start editing
-              </div>
+        )}
+        {chapters?.length > 0 && (
+          <>
+            {isCreateCourseFormOpen && (
+              <CreateNewLesson
+                onLessonSubmit={onLessonSubmit}
+                lessonForm={lessonForm}
+              />
             )}
-          </div>
+          </>
         )}
       </div>
     </div>
