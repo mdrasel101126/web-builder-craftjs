@@ -52,3 +52,67 @@ export const lessonSchema = z.object({
 });
 
 export type LessonFormData = z.infer<typeof lessonSchema>;
+
+//course princing plan schema
+export const basePriceSchema = z.object({
+  price: z.number().min(0, "Price must be greater than or equal to 0"),
+  strikeThroughPrice: z.number().min(0).optional(),
+});
+
+export const oneTimePlanSchema = basePriceSchema.extend({
+  type: z.literal("ONE_TIME_STANDARD"),
+  expiry: z.enum(["LIFETIME", "LIMITED"]),
+  expiryDays: z.number().min(1).optional(),
+});
+
+export const oneTimeTieredPlanSchema = basePriceSchema.extend({
+  type: z.literal("ONE_TIME_TIERED"),
+  tiers: z.array(
+    z.object({
+      name: z.string().min(1),
+      price: z.number().min(0),
+      features: z.array(z.string()),
+    }),
+  ),
+});
+
+export const splitPaymentPlanSchema = basePriceSchema.extend({
+  type: z.literal("SPLIT_PAYMENT"),
+  installments: z.number().min(2),
+  intervalDays: z.number().min(1),
+});
+
+export const subscriptionPlanSchema = basePriceSchema.extend({
+  type: z.literal("SUBSCRIPTION_STANDARD"),
+  interval: z.enum(["MONTHLY", "YEARLY"]),
+  trialDays: z.number().min(0).optional(),
+});
+
+export const subscriptionTieredPlanSchema = basePriceSchema.extend({
+  type: z.literal("SUBSCRIPTION_TIERED"),
+  interval: z.enum(["MONTHLY", "YEARLY"]),
+  tiers: z.array(
+    z.object({
+      name: z.string().min(1),
+      price: z.number().min(0),
+      features: z.array(z.string()),
+    }),
+  ),
+});
+
+export const donationPlanSchema = z.object({
+  type: z.literal("DONATION"),
+  suggestedAmounts: z.array(z.number().min(0)),
+  minimumAmount: z.number().min(0),
+});
+
+export const pricingPlanSchema = z.discriminatedUnion("type", [
+  oneTimePlanSchema,
+  oneTimeTieredPlanSchema,
+  splitPaymentPlanSchema,
+  subscriptionPlanSchema,
+  subscriptionTieredPlanSchema,
+  donationPlanSchema,
+]);
+
+export type PricingPlan = z.infer<typeof pricingPlanSchema>;
