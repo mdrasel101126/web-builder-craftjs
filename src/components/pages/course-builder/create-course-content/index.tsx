@@ -29,14 +29,17 @@ import {
   lessonSchema,
 } from "@/lib/validations/course";
 import CreateNewLesson from "./CreateNewLesson";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DraggableChapter } from "./DraggableChapter";
 
-interface Chapter {
+export interface Chapter {
   id: string;
   title: string;
   lessons: Lesson[];
 }
 
-interface Lesson {
+export interface Lesson {
   id: string;
   title: string;
   content?: string;
@@ -127,56 +130,35 @@ export default function CourseContent() {
     setIsCreateLessonFormOpen(true);
   };
 
+  const moveChapter = (dragIndex: number, hoverIndex: number) => {
+    const newChapters = [...chapters];
+    const draggedChapter = newChapters[dragIndex];
+    newChapters.splice(dragIndex, 1);
+    newChapters.splice(hoverIndex, 0, draggedChapter);
+    setChapters(newChapters);
+  };
+
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
       <div className="w-80 border-r ">
         <div className="p-4 space-y-4">
           <h3 className="text-2xl font-medium">Course name</h3>
-          <div className="space-y-2">
-            {chapters.map((chapter, index) => (
-              <div
-                key={chapter.id}
-                className="select-none"
-              >
-                <div
-                  className="flex items-center px-4 py-2 hover:bg-accent cursor-pointer"
-                  onClick={() => toggleChapter(chapter.id)}
-                >
-                  {expandedChapters.has(chapter.id) ? (
-                    <ChevronDown className="h-4 w-4 mr-2" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4 mr-2" />
-                  )}
-                  <span className="text-sm font-medium">
-                    {index + 1}. {chapter.title}
-                  </span>
-                </div>
-
-                {expandedChapters.has(chapter.id) && (
-                  <div className="ml-6 space-y-1">
-                    {chapter.lessons.map((lesson, lessonIndex) => (
-                      <div
-                        key={lesson.id}
-                        className="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent cursor-pointer"
-                      >
-                        {lessonIndex + 1}. {lesson.title}
-                      </div>
-                    ))}
-                    <Button
-                      variant="ghost"
-                      size="lg"
-                      className="border ml-4 text-muted-foreground"
-                      onClick={() => handleAddLesson(chapter.id)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create New Lesson
-                    </Button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          <DndProvider backend={HTML5Backend}>
+            <div className="space-y-2">
+              {chapters.map((chapter, index) => (
+                <DraggableChapter
+                  key={chapter.id}
+                  chapter={chapter}
+                  index={index}
+                  moveChapter={moveChapter}
+                  toggleChapter={toggleChapter}
+                  handleAddLesson={handleAddLesson}
+                  expandedChapters={expandedChapters}
+                />
+              ))}
+            </div>
+          </DndProvider>
           <Dialog
             open={isChapterDialogOpen}
             onOpenChange={setIsChapterDialogOpen}

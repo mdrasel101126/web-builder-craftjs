@@ -38,6 +38,8 @@
     "react-color": "^2.19.3",
     "react-contenteditable": "^3.3.7",
     "react-day-picker": "^8.10.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-hook-form": "^7.54.2",
     "react-youtube": "^10.1.0",
