@@ -7,11 +7,13 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       <SettingsSidebar />
-      <main className="flex-1 overflow-y-auto">
-        <Navbar />
-        {children}
+      <main className="flex-1 h-screen overflow-auto">
+        <div>
+          <Navbar />
+          {children}
+        </div>
       </main>
     </div>
   );
