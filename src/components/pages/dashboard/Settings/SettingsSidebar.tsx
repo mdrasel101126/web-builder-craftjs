@@ -19,7 +19,7 @@ const navSections = [
     title: "General Settings",
     items: [
       { name: "General Details", href: "/settings/general-details" },
-      { name: "User Permissions", href: "/settings/permissions" },
+      { name: "User Permissions", href: "/settings/user-permission" },
       { name: "Billing", href: "/settings/billing" },
       { name: "Payments", href: "/settings/payments" },
       { name: "Shipping", href: "/settings/shipping" },
