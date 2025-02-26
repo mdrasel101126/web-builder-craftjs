@@ -1,3 +1,4 @@
+import Navbar from "@/components/pages/dashboard/Settings/Navbar";
 import SettingsSidebar from "@/components/pages/dashboard/Settings/SettingsSidebar";
 
 export default function SettingsLayout({
@@ -8,7 +9,10 @@ export default function SettingsLayout({
   return (
     <div className="flex h-screen">
       <SettingsSidebar />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto">
+        <Navbar />
+        {children}
+      </main>
     </div>
   );
 }

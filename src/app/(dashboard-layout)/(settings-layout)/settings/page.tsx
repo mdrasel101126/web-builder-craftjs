@@ -1,11 +1,7 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
 const SettingsPage = () => {
-  return (
-    <div>
-      <h1>hello world</h1>
-    </div>
-  );
+  return redirect("/settings/general-details");
 };
 
 export default SettingsPage;
