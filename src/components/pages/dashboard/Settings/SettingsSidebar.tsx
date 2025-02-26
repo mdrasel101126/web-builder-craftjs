@@ -45,7 +45,7 @@ export default function SettingsSidebar() {
   return (
     <aside
       className={cn(
-        "h-screen border-r transition-all overflow-hidden  ",
+        "h-screen border-r transition-all overflow-x-hidden  ",
         collapsed ? "w-0" : "w-64",
       )}
     >
