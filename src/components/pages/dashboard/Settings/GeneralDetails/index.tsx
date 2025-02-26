@@ -68,8 +68,8 @@ export function GeneralDetails() {
   };
 
   return (
-    <div className=" m-5 p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className=" mx-5 p-6">
+      <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">General Details</h1>
         <div className="flex gap-2">
           <Button
