@@ -32,7 +32,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="h-screen w-16 bg-gray-900 p-4 flex flex-col items-center space-y-6 text-white">
+    <aside className="h-screen  w-16 bg-gray-900 p-4 flex flex-col items-center space-y-6 text-white">
       <div className="h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center">
         <span className="text-lg font-bold">D</span>
       </div>
