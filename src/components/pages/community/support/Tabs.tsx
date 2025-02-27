@@ -5,15 +5,16 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { path: "/community/support/help-center", label: "Help Center" },
   { path: "/community/support/submit-ticket", label: "Submit Ticket" },
-  { path: "/faq", label: "FAQs" },
-  { path: "/contact", label: "Contact Us" },
+  { path: "/community/support/tickets", label: "My Tickets" },
+  { path: "/community/support/faq", label: "FAQs" },
+  { path: "/community/support/contact-us", label: "Contact Us" },
 ];
 
 const Tabs = () => {
   const pathname = usePathname();
 
   return (
-    <div className="grid w-full grid-cols-4 border-b border-gray-300">
+    <div className="grid w-full grid-cols-8 border-b border-gray-300">
       {tabs.map(({ path, label }) => {
         const isActive = pathname === path;
         return (
