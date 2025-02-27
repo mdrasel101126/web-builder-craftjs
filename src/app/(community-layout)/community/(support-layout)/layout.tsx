@@ -1,9 +1,7 @@
-import Tabs from "@/components/pages/community/Tabs";
-import Link from "next/link";
-import path from "path";
+import Tabs from "@/components/pages/community/support/Tabs";
 import React from "react";
 
-export default function CommunityLayout({
+export default function SupportLayout({
   children,
 }: {
   children: React.ReactNode;
