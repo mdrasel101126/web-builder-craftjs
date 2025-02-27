@@ -25,7 +25,7 @@ export default function Tabs() {
       <div className="p-5">
         <span className={cn("font-semibold text-2xl")}>Settings</span>
       </div>
-      <nav className="p-4 space-y-6">
+      <nav className="px-4 space-y-6">
         <div className="mt-2 flex flex-wrap gap-4">
           {tabs.map(({ name, href }) => (
             <Link

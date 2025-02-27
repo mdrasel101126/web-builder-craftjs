@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins, Roboto } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -51,6 +52,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${poppins.variable} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
