@@ -1,4 +1,4 @@
-import { Domain } from "@/components/pages/dashboard/Settings/Domain";
+import { Domain } from "@/components/pages/settings/domain";
 import React from "react";
 
 const DomainPage = () => {

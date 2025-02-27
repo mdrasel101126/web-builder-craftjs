@@ -1,4 +1,4 @@
-import { Notification } from "@/components/pages/dashboard/Settings/Notification";
+import { Notification } from "@/components/pages/settings/notification";
 import React from "react";
 
 const NotificationPage = () => {

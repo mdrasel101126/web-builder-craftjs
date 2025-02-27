@@ -1,4 +1,4 @@
-import { Plans } from "@/components/pages/dashboard/Settings/Plans";
+import { Plans } from "@/components/pages/settings/plans";
 import React from "react";
 
 const PlansPage = () => {

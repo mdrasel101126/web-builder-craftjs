@@ -1,4 +1,4 @@
-import { GeneralDetails } from "@/components/pages/dashboard/Settings/GeneralDetails";
+import { GeneralDetails } from "@/components/pages/settings/general-details";
 import React from "react";
 
 const GeneralPage = () => {

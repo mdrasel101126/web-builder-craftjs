@@ -1,4 +1,4 @@
-import { Payments } from "@/components/pages/dashboard/Settings/Payments";
+import { Payments } from "@/components/pages/settings/payments";
 import React from "react";
 
 const PaymentsPage = () => {

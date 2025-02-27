@@ -1,4 +1,5 @@
-import { Shipping } from "@/components/pages/dashboard/Settings/Shipping";
+
+import { Shipping } from "@/components/pages/settings/shipping";
 import React from "react";
 
 const ShippingPage = () => {

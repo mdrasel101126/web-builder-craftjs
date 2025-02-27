@@ -1,4 +1,4 @@
-import { UserPermission } from "@/components/pages/dashboard/Settings/UserPermission";
+import { UserPermission } from "@/components/pages/settings/user-permission";
 import React from "react";
 
 const UserPermissionPage = () => {
