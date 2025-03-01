@@ -9,3 +9,12 @@ export const postFormSchema = z.object({
 });
 
 export type PostFormValues = z.infer<typeof postFormSchema>;
+
+export const commentFormSchema = z.object({
+  content: z
+    .string()
+    .min(1, { message: "Comment content is required" })
+    .max(500, { message: "Comment must be less than 500 characters" }),
+});
+
+export type CommentFormValues = z.infer<typeof commentFormSchema>;

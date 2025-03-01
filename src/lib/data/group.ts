@@ -80,9 +80,9 @@ export const users: User[] = [
 export const groups: Group[] = [
   {
     id: "group-1",
-    name: "Phitron Alumni Association",
+    name: "ByteForge Collective",
     description:
-      "A community for all Phitron alumni to connect and share opportunities.",
+      "A think tank for digital creators, coders, and innovators shaping the future.",
     privacy: "private",
     coverImage:
       "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1200&auto=format&fit=crop",
@@ -93,9 +93,9 @@ export const groups: Group[] = [
   },
   {
     id: "group-2",
-    name: "CSE Job Bangladesh",
+    name: "Quantum Nexus",
     description:
-      "Job opportunities for Computer Science graduates in Bangladesh.",
+      "A convergence of tech minds exploring uncharted territories in computing and AI.",
     privacy: "public",
     coverImage:
       "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1200&auto=format&fit=crop",
@@ -106,9 +106,9 @@ export const groups: Group[] = [
   },
   {
     id: "group-3",
-    name: "MERN Stack Developers",
+    name: "Cipher Architects",
     description:
-      "A group for MERN stack developers to discuss technologies and best practices.",
+      "Where algorithms meet creativity—discussing cutting-edge software craftsmanship.",
     privacy: "public",
     coverImage:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
@@ -119,9 +119,9 @@ export const groups: Group[] = [
   },
   {
     id: "group-4",
-    name: "Department of CSE, Sylhet Engineering College",
+    name: "Silicon Nomads",
     description:
-      "Official group for CSE department students and alumni of Sylhet Engineering College.",
+      "A gathering place for digital wanderers, remote engineers, and indie hackers.",
     privacy: "private",
     coverImage:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
